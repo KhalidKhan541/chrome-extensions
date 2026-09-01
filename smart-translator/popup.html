@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Translator</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo-row">
+        <img src="icons/icon48.svg" alt="Smart Translator" class="logo">
+        <h1>Smart Translator</h1>
+      </div>
+      <div class="tabs">
+        <button class="tab active" data-tab="translate">Translate</button>
+        <button class="tab" data-tab="history">History</button>
+        <button class="tab" data-tab="phrasebook">Phrasebook</button>
+        <button class="tab" data-tab="dictionary">Dictionary</button>
+      </div>
+    </header>
+
+    <main>
+      <section id="tab-translate" class="tab-content active">
+        <div class="lang-selectors">
+          <select id="source-lang" aria-label="Source language"></select>
+          <button id="swap-btn" class="swap-btn" title="Swap languages">&#8646;</button>
+          <select id="target-lang" aria-label="Target language"></select>
+        </div>
+        <div class="input-group">
+          <textarea id="source-text" rows="4" placeholder="Enter text to translate..." aria-label="Source text"></textarea>
+          <button class="copy-btn" id="copy-source" title="Copy source">&#128203;</button>
+        </div>
+        <div class="detected-lang" id="detected-lang"></div>
+        <div class="input-group output-group">
+          <textarea id="target-text" rows="4" readonly placeholder="Translation will appear here..." aria-label="Translation output"></textarea>
+          <button class="copy-btn" id="copy-target" title="Copy translation">&#128203;</button>
+        </div>
+        <div class="actions">
+          <button id="btn-clear" class="btn btn-secondary">Clear</button>
+          <button id="btn-save-phrase" class="btn btn-primary">&#9734; Save to Phrasebook</button>
+        </div>
+      </section>
+
+      <section id="tab-history" class="tab-content">
+        <div class="section-header">
+          <h2>Translation History</h2>
+          <button id="clear-history" class="btn btn-small btn-danger">Clear All</button>
+        </div>
+        <div id="history-list" class="list-container">
+          <p class="empty-msg">No translations yet.</p>
+        </div>
+      </section>
+
+      <section id="tab-phrasebook" class="tab-content">
+        <div class="section-header">
+          <h2>Phrasebook</h2>
+          <button id="export-phrasebook" class="btn btn-small btn-secondary">Export</button>
+        </div>
+        <div id="phrasebook-list" class="list-container">
+          <p class="empty-msg">No saved phrases. Translate something and save it!</p>
+        </div>
+      </section>
+
+      <section id="tab-dictionary" class="tab-content">
+        <div class="dict-search">
+          <input type="text" id="dict-input" placeholder="Look up a word..." aria-label="Dictionary search">
+          <button id="dict-search-btn" class="btn btn-primary">Search</button>
+        </div>
+        <div id="dict-result" class="dict-result">
+          <p class="empty-msg">Enter a word to look up its definition, synonyms, and examples.</p>
+        </div>
+      </section>
+    </main>
+  </div>
+  <script src="languages.js"></script>
+  <script src="translator.js"></script>
+  <script src="dictionary.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

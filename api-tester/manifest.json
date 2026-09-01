@@ -1,0 +1,39 @@
+{
+  "manifest_version": 3,
+  "name": "API Request Tester",
+  "version": "1.0.0",
+  "description": "A professional Postman-like API testing tool that runs in the browser.",
+  "permissions": [
+    "storage",
+    "activeTab",
+    "webRequest"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    },
+    "default_title": "API Request Tester"
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["request-handler.js", "response-viewer.js"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

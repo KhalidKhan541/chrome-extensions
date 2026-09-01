@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <defs>
+    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#6366f1"/>
+      <stop offset="100%" style="stop-color:#8b5cf6"/>
+    </linearGradient>
+  </defs>
+  <circle cx="64" cy="64" r="60" fill="url(#g)"/>
+  <g fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M 36 48 L 42 28 L 48 48"/>
+    <path d="M 37 43 H 47"/>
+    <path d="M 56 32 C 56 32 72 32 74 48 C 75 56 72 72 66 76 C 69 68 74 52 72 42"/>
+    <ellipse cx="30" cy="80" rx="18" ry="16"/>
+    <ellipse cx="74" cy="80" rx="18" ry="16"/>
+    <path d="M 48 80 H 56"/>
+    <path d="M 18 66 Q 30 60 42 66" stroke-width="1.5"/>
+    <path d="M 62 66 Q 74 60 86 66" stroke-width="1.5"/>
+    <path d="M 16 94 Q 30 102 44 94" stroke-width="1.5"/>
+    <path d="M 60 94 Q 74 102 88 94" stroke-width="1.5"/>
+  </g>
+  <text x="64" y="118" text-anchor="middle" fill="#fff" font-family="Arial" font-size="12" font-weight="bold">A⇔あ</text>
+</svg>

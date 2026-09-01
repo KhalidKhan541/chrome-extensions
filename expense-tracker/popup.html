@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Expense Tracker</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="app">
+    <header class="header">
+      <div class="logo">
+        <span class="logo-icon">💰</span>
+        <h1>Expense Tracker</h1>
+      </div>
+      <div class="header-actions">
+        <button id="btnExport" class="btn-icon" title="Export Data">📤</button>
+        <button id="btnSettings" class="btn-icon" title="Budget Settings">⚙️</button>
+      </div>
+    </header>
+
+    <nav class="tabs">
+      <button class="tab active" data-tab="add">Add</button>
+      <button class="tab" data-tab="dashboard">Dashboard</button>
+      <button class="tab" data-tab="history">History</button>
+    </nav>
+
+    <main class="content">
+      <!-- Add Expense Tab -->
+      <section id="tab-add" class="tab-content active">
+        <div class="card">
+          <h2>New Expense</h2>
+          <form id="expenseForm">
+            <div class="form-group">
+              <label for="amount">Amount ($)</label>
+              <input type="number" id="amount" step="0.01" min="0" placeholder="0.00" required>
+            </div>
+            <div class="form-group">
+              <label for="category">Category</label>
+              <div id="categoryGrid" class="category-grid"></div>
+            </div>
+            <div class="form-group">
+              <label for="description">Description</label>
+              <input type="text" id="description" placeholder="What was this for?">
+            </div>
+            <div class="form-group">
+              <label for="date">Date</label>
+              <input type="date" id="date" required>
+            </div>
+            <div class="form-group">
+              <label>
+                <input type="checkbox" id="recurring"> Recurring expense
+              </label>
+              <select id="recurringFreq" class="hidden">
+                <option value="weekly">Weekly</option>
+                <option value="monthly" selected>Monthly</option>
+                <option value="yearly">Yearly</option>
+              </select>
+            </div>
+            <button type="submit" class="btn-primary" id="btnAddExpense">Add Expense</button>
+          </form>
+        </div>
+
+        <div class="card">
+          <h2>Quick Summary</h2>
+          <div id="quickSummary" class="summary-grid">
+            <div class="summary-item">
+              <span class="summary-label">Today</span>
+              <span class="summary-value" id="todayTotal">$0.00</span>
+            </div>
+            <div class="summary-item">
+              <span class="summary-label">This Week</span>
+              <span class="summary-value" id="weekTotal">$0.00</span>
+            </div>
+            <div class="summary-item">
+              <span class="summary-label">This Month</span>
+              <span class="summary-value" id="monthTotal">$0.00</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Dashboard Tab -->
+      <section id="tab-dashboard" class="tab-content">
+        <div class="card">
+          <h2>Monthly Overview</h2>
+          <div class="budget-bar">
+            <div class="budget-info">
+              <span id="budgetSpent">$0.00</span> / <span id="budgetTotal">$0.00</span>
+            </div>
+            <div class="budget-track">
+              <div class="budget-fill" id="budgetFill"></div>
+            </div>
+            <span class="budget-remaining" id="budgetRemaining"></span>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>Spending by Category</h2>
+          <canvas id="pieChart" width="320" height="200"></canvas>
+        </div>
+
+        <div class="card">
+          <h2>Daily Spending (7 days)</h2>
+          <canvas id="barChart" width="320" height="180"></canvas>
+        </div>
+
+        <div class="card">
+          <h2>Weekly Trend</h2>
+          <canvas id="trendChart" width="320" height="180"></canvas>
+        </div>
+      </section>
+
+      <!-- History Tab -->
+      <section id="tab-history" class="tab-content">
+        <div class="card">
+          <div class="history-header">
+            <h2>Recent Expenses</h2>
+            <select id="historyFilter">
+              <option value="all">All</option>
+              <option value="today">Today</option>
+              <option value="week">This Week</option>
+              <option value="month">This Month</option>
+            </select>
+          </div>
+          <div id="expenseList" class="expense-list"></div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Budget Modal -->
+    <div id="budgetModal" class="modal hidden">
+      <div class="modal-content">
+        <h2>Set Monthly Budget</h2>
+        <div class="form-group">
+          <label for="budgetInput">Monthly Budget ($)</label>
+          <input type="number" id="budgetInput" step="0.01" min="0" placeholder="0.00">
+        </div>
+        <div class="modal-actions">
+          <button id="btnSaveBudget" class="btn-primary">Save</button>
+          <button id="btnCancelBudget" class="btn-secondary">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Export Modal -->
+    <div id="exportModal" class="modal hidden">
+      <div class="modal-content">
+        <h2>Export Data</h2>
+        <div class="export-options">
+          <button id="exportCSV" class="btn-export">📄 Export CSV</button>
+          <button id="exportJSON" class="btn-export">📋 Export JSON</button>
+          <button id="exportReport" class="btn-export">📊 Monthly Report</button>
+        </div>
+        <div class="modal-actions">
+          <button id="btnCancelExport" class="btn-secondary">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast -->
+    <div id="toast" class="toast hidden"></div>
+  </div>
+
+  <script src="categories.js"></script>
+  <script src="storage.js"></script>
+  <script src="charts.js"></script>
+  <script src="export.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

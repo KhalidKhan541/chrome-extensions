@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=600" />
+  <title>API Request Tester</title>
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <div id="app">
+    <!-- ── Header ── -->
+    <header class="app-header">
+      <div class="header-brand">
+        <svg class="header-icon" viewBox="0 0 24 24" width="22" height="22"><use href="#icon-network"/></svg>
+        <h1>API Request Tester</h1>
+      </div>
+      <div class="header-actions">
+        <button id="btnImport" class="icon-btn" title="Import collection">Import</button>
+        <button id="btnExport" class="icon-btn" title="Export collection">Export</button>
+        <button id="btnEnvToggle" class="icon-btn" title="Environment variables">Env</button>
+      </div>
+    </header>
+
+    <!-- ── Environment Variables Panel (hidden by default) ── -->
+    <section id="envPanel" class="panel hidden">
+      <div class="panel-header">
+        <h2>Environment Variables</h2>
+        <button id="btnAddEnv" class="btn-sm">+ Add</button>
+      </div>
+      <div id="envList" class="kv-list"></div>
+      <div class="panel-footer">
+        <button id="btnSaveEnv" class="btn-primary btn-sm">Save Variables</button>
+      </div>
+    </section>
+
+    <!-- ── URL Bar ── -->
+    <section class="url-bar">
+      <select id="methodSelect">
+        <option value="GET">GET</option>
+        <option value="POST">POST</option>
+        <option value="PUT">PUT</option>
+        <option value="DELETE">DELETE</option>
+        <option value="PATCH">PATCH</option>
+        <option value="HEAD">HEAD</option>
+        <option value="OPTIONS">OPTIONS</option>
+      </select>
+      <input id="urlInput" type="text" placeholder="https://api.example.com/endpoint" spellcheck="false" />
+      <button id="btnSend" class="btn-send">Send</button>
+    </section>
+
+    <!-- ── Tabs ── -->
+    <div class="tab-bar">
+      <button class="tab active" data-tab="headers">Headers</button>
+      <button class="tab" data-tab="body">Body</button>
+      <button class="tab" data-tab="history">History</button>
+    </div>
+
+    <!-- ── Headers Tab ── -->
+    <div id="tab-headers" class="tab-content active">
+      <div class="kv-toolbar">
+        <button id="btnAddHeader" class="btn-sm">+ Add Header</button>
+      </div>
+      <div id="headersList" class="kv-list"></div>
+    </div>
+
+    <!-- ── Body Tab ── -->
+    <div id="tab-body" class="tab-content">
+      <div class="body-type-bar">
+        <label><input type="radio" name="bodyType" value="none" checked /> None</label>
+        <label><input type="radio" name="bodyType" value="json" /> JSON</label>
+        <label><input type="radio" name="bodyType" value="text" /> Text</label>
+        <label><input type="radio" name="bodyType" value="formdata" /> Form Data</label>
+      </div>
+      <div id="bodyJsonArea" class="body-area hidden">
+        <textarea id="bodyJson" placeholder='{"key": "value"}' spellcheck="false"></textarea>
+      </div>
+      <div id="bodyTextArea" class="body-area hidden">
+        <textarea id="bodyText" placeholder="Plain text body" spellcheck="false"></textarea>
+      </div>
+      <div id="bodyFormDataArea" class="body-area hidden">
+        <div class="kv-toolbar">
+          <button id="btnAddFormDatum" class="btn-sm">+ Add Field</button>
+        </div>
+        <div id="formDataList" class="kv-list"></div>
+      </div>
+    </div>
+
+    <!-- ── History Tab ── -->
+    <div id="tab-history" class="tab-content">
+      <div class="kv-toolbar">
+        <button id="btnClearHistory" class="btn-sm btn-danger">Clear History</button>
+      </div>
+      <div id="historyList" class="history-list"></div>
+    </div>
+
+    <!-- ── Response Section ── -->
+    <section id="responseSection" class="response-section hidden">
+      <div class="response-meta">
+        <span id="resStatus" class="res-badge"></span>
+        <span id="resTime" class="res-info"></span>
+        <span id="resSize" class="res-info"></span>
+        <button id="btnCopyRes" class="icon-btn btn-sm" title="Copy response">Copy</button>
+      </div>
+      <div class="response-tab-bar">
+        <button class="resp-tab active" data-resptab="body">Body</button>
+        <button class="resp-tab" data-resptab="headers">Headers</button>
+      </div>
+      <div id="respBody" class="response-body"></div>
+      <div id="respHeaders" class="response-body hidden"></div>
+    </section>
+  </div>
+
+  <!-- ── SVG sprite ── -->
+  <svg style="display:none">
+    <symbol id="icon-network" viewBox="0 0 24 24">
+      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+    </symbol>
+  </svg>
+
+  <script src="request-handler.js"></script>
+  <script src="response-viewer.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+  <defs>
+    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#6366f1"/>
+      <stop offset="100%" style="stop-color:#8b5cf6"/>
+    </linearGradient>
+  </defs>
+  <circle cx="8" cy="8" r="7.5" fill="url(#g)"/>
+  <g fill="none" stroke="#fff" stroke-width="1" stroke-linecap="round">
+    <path d="M 4 6 L 5.5 3 L 7 6"/>
+    <path d="M 4.3 5.3 H 6.7"/>
+    <path d="M 8 3.5 C 8 3.5 11 3.5 11.5 7 C 11.8 8 10.8 11.5 9.8 12 C 10.5 10.8 11.5 8.2 11.2 6.5"/>
+    <text x="8" y="14" text-anchor="middle" fill="#fff" font-size="3.5" font-weight="bold" font-family="Arial">Aあ</text>
+  </g>
+</svg>

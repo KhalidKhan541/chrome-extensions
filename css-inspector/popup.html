@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS Inspector Pro</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+
+  <div class="header">
+    <div class="header-left">
+      <h1>CSS <span>Inspector</span> Pro</h1>
+    </div>
+    <div class="header-actions">
+      <button class="btn btn-icon" id="btn-settings" title="Settings">⚙</button>
+      <button class="btn btn-icon" id="btn-help" title="Help">?</button>
+    </div>
+  </div>
+
+  <!-- Inspector Toggle -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-title"><span class="icon">🔍</span> Inspector</span>
+      <button class="btn btn-sm" id="btn-toggle-inspector">Enable</button>
+    </div>
+    <div class="section-body" id="inspector-status">
+      <div class="empty-state" id="inspector-off">
+        <div class="icon">🎯</div>
+        <p>Click <strong>Enable</strong> to start inspecting elements on the page.</p>
+      </div>
+      <div class="empty-state" id="inspector-on" style="display:none">
+        <div class="icon" style="color:var(--green)">✓</div>
+        <p>Inspector active — hover over elements to preview, click to select.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Element Info -->
+  <div class="section" id="section-element" style="display:none">
+    <div class="section-header">
+      <span class="section-title"><span class="icon">🏷</span> Element</span>
+    </div>
+    <div class="section-body">
+      <div class="element-info" id="element-info"></div>
+      <div class="selector-row">
+        <input type="text" class="selector-input" id="selector-display" readonly title="Click copy to copy this selector">
+        <button class="btn btn-sm" id="btn-copy-selector" title="Copy selector">Copy</button>
+        <button class="btn btn-sm" id="btn-copy-selector-all" title="Copy all matching selectors">All</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tabs: Styles / Computed / Box Model -->
+  <div class="section" id="section-styles" style="display:none">
+    <div class="tab-bar">
+      <div class="tab active" data-tab="styles">Styles</div>
+      <div class="tab" data-tab="computed">Computed</div>
+      <div class="tab" data-tab="boxmodel">Box Model</div>
+    </div>
+
+    <!-- Styles Tab -->
+    <div class="tab-content active" id="tab-styles">
+      <div class="section-body">
+        <div class="css-props-list" id="styles-list"></div>
+      </div>
+    </div>
+
+    <!-- Computed Tab -->
+    <div class="tab-content" id="tab-computed">
+      <div class="section-body">
+        <div class="css-props-list" id="computed-list"></div>
+      </div>
+    </div>
+
+    <!-- Box Model Tab -->
+    <div class="tab-content" id="tab-boxmodel">
+      <div class="section-body">
+        <div class="box-model-container">
+          <div class="box-model" id="box-model">
+            <div class="box-layer box-margin" id="bm-margin">
+              <span class="label">Margin</span>
+              <span class="value" id="bm-margin-val"></span>
+            </div>
+            <div class="box-layer box-border" id="bm-border">
+              <span class="label">Border</span>
+              <span class="value" id="bm-border-val"></span>
+            </div>
+            <div class="box-layer box-padding" id="bm-padding">
+              <span class="label">Padding</span>
+              <span class="value" id="bm-padding-val"></span>
+            </div>
+            <div class="box-layer box-content" id="bm-content">
+              <span class="label">Content</span>
+              <span class="value" id="bm-content-val"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Responsive Tester -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-title"><span class="icon">📱</span> Responsive</span>
+      <button class="btn btn-sm" id="btn-toggle-responsive">Test</button>
+    </div>
+    <div class="section-body collapsed" id="responsive-body">
+      <div class="responsive-grid" id="responsive-presets"></div>
+      <div class="responsive-custom">
+        <input type="number" id="resp-width" placeholder="Width" value="375">
+        <span>×</span>
+        <input type="number" id="resp-height" placeholder="Height" value="667">
+        <button class="btn btn-sm" id="btn-apply-viewport">Apply</button>
+      </div>
+      <div class="media-queries" id="media-queries"></div>
+      <div class="responsive-frame" id="responsive-frame">
+        <div class="frame-header">
+          <span id="frame-size">375 × 667</span>
+          <button class="btn btn-sm" id="btn-close-frame">✕</button>
+        </div>
+        <iframe id="responsive-iframe" sandbox="allow-same-origin allow-scripts"></iframe>
+      </div>
+    </div>
+  </div>
+
+  <!-- CSS Utilities -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-title"><span class="icon">🔧</span> Utilities</span>
+    </div>
+    <div class="section-body" style="display:flex; gap:4px; flex-wrap:wrap;">
+      <button class="btn btn-sm" id="btn-copy-all-styles" title="Copy all styles for selected element">Copy Styles</button>
+      <button class="btn btn-sm" id="btn-copy-html" title="Copy outer HTML of selected element">Copy HTML</button>
+      <button class="btn btn-sm" id="btn-undo" title="Undo last CSS change" disabled>↩ Undo</button>
+      <button class="btn btn-sm" id="btn-redo" title="Redo last undone change" disabled>↪ Redo</button>
+    </div>
+  </div>
+
+  <!-- History Bar -->
+  <div class="history-bar" id="history-bar">
+    <span class="history-count" id="history-count"></span>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="css-utils.js"></script>
+  <script src="inspector.js"></script>
+  <script src="responsive-tester.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

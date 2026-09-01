@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Guard</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <div class="logo">
+        <svg class="shield-icon" viewBox="0 0 24 24" width="28" height="28">
+          <path fill="currentColor" d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/>
+        </svg>
+        <h1>Privacy Guard</h1>
+      </div>
+      <div class="current-site" id="currentSite">
+        <span class="site-label">Current Site</span>
+        <span class="site-url" id="siteUrl">Loading...</span>
+      </div>
+    </header>
+
+    <section class="score-section">
+      <div class="score-container">
+        <svg class="score-ring" viewBox="0 0 120 120">
+          <circle class="score-bg" cx="60" cy="60" r="54"/>
+          <circle class="score-fill" id="scoreFill" cx="60" cy="60" r="54"/>
+        </svg>
+        <div class="score-text">
+          <span class="score-value" id="scoreValue">--</span>
+          <span class="score-label">Privacy Score</span>
+        </div>
+      </div>
+      <div class="tracker-count">
+        <span class="count-number" id="trackerCount">0</span>
+        <span class="count-label">Trackers on this page</span>
+      </div>
+    </section>
+
+    <section class="toggles-section">
+      <h2 class="section-title">Protection Settings</h2>
+      <div class="toggle-row">
+        <div class="toggle-info">
+          <span class="toggle-name">Block Trackers</span>
+          <span class="toggle-desc">Block known tracking scripts and pixels</span>
+        </div>
+        <label class="toggle-switch">
+          <input type="checkbox" id="toggleTrackers" checked>
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+      <div class="toggle-row">
+        <div class="toggle-info">
+          <span class="toggle-name">HTTPS Upgrade</span>
+          <span class="toggle-desc">Automatically upgrade HTTP connections to HTTPS</span>
+        </div>
+        <label class="toggle-switch">
+          <input type="checkbox" id="toggleHttps" checked>
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+      <div class="toggle-row">
+        <div class="toggle-info">
+          <span class="toggle-name">Fingerprint Protection</span>
+          <span class="toggle-desc">Block browser fingerprinting attempts</span>
+        </div>
+        <label class="toggle-switch">
+          <input type="checkbox" id="toggleFingerprint" checked>
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+    </section>
+
+    <section class="blocked-section">
+      <h2 class="section-title">
+        Blocked Trackers
+        <span class="blocked-count" id="blockedCount">0</span>
+      </h2>
+      <div class="blocked-list" id="blockedList">
+        <div class="empty-state" id="emptyState">No trackers detected on this page</div>
+      </div>
+    </section>
+
+    <section class="whitelist-section">
+      <div class="whitelist-row">
+        <div class="whitelist-info">
+          <span class="whitelist-name">Whitelist this site</span>
+          <span class="whitelist-desc">Disable protection for the current domain</span>
+        </div>
+        <label class="toggle-switch">
+          <input type="checkbox" id="toggleWhitelist">
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+    </section>
+
+    <footer class="stats-footer">
+      <div class="stat">
+        <span class="stat-value" id="totalBlocked">0</span>
+        <span class="stat-label">Blocked Today</span>
+      </div>
+      <div class="stat">
+        <span class="stat-value" id="totalSites">0</span>
+        <span class="stat-label">Sites Protected</span>
+      </div>
+      <div class="stat">
+        <span class="stat-value" id="totalHttps">0</span>
+        <span class="stat-label">HTTPS Upgrades</span>
+      </div>
+    </footer>
+  </div>
+
+  <script src="tracker-database.js"></script>
+  <script src="blocker.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

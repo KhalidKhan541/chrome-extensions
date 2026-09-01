@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Writer Assistant</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <div class="logo">
+        <svg class="logo-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M8 40L14 36L38 12L40 10C42 8 42 4 38 4C34 4 32 6 30 8L8 30L4 42L8 40Z" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M30 8L38 16" stroke="currentColor" stroke-width="3"/>
+          <path d="M36 4L40 8L36 12L32 8L36 4Z" fill="currentColor"/>
+          <circle cx="20" cy="28" r="2" fill="#ffd700"/>
+          <circle cx="28" cy="20" r="1.5" fill="#ffd700"/>
+          <circle cx="16" cy="24" r="1" fill="#ffd700"/>
+          <circle cx="24" cy="16" r="1" fill="#ffd700"/>
+          <path d="M18 20L22 24" stroke="#ffd700" stroke-width="1" stroke-linecap="round"/>
+          <path d="M26 12L30 16" stroke="#ffd700" stroke-width="1" stroke-linecap="round"/>
+        </svg>
+        <h1>AI Writer Assistant</h1>
+      </div>
+      <button id="settingsBtn" class="icon-btn" title="Settings">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="3"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+        </svg>
+      </button>
+    </header>
+
+    <div class="main-content">
+      <div class="input-section">
+        <div class="textarea-wrapper">
+          <textarea id="inputText" placeholder="Paste or type your text here..." rows="8"></textarea>
+          <div class="textarea-footer">
+            <div class="stats">
+              <span id="wordCount">0 words</span>
+              <span class="separator">|</span>
+              <span id="charCount">0 chars</span>
+              <span class="separator">|</span>
+              <span id="sentenceCount">0 sentences</span>
+              <span class="separator">|</span>
+              <span id="readingTime">0 min read</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="controls">
+          <div class="tone-selector">
+            <label for="toneSelect">Tone:</label>
+            <select id="toneSelect">
+              <option value="auto">Auto Detect</option>
+              <option value="formal">Formal</option>
+              <option value="casual">Casual</option>
+              <option value="creative">Creative</option>
+              <option value="professional">Professional</option>
+              <option value="academic">Academic</option>
+              <option value="concise">Concise</option>
+            </select>
+          </div>
+          <button id="improveBtn" class="primary-btn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 2L15 9L22 12L15 15L12 22L9 15L2 12L9 9L12 2Z"/>
+            </svg>
+            Improve Text
+          </button>
+        </div>
+      </div>
+
+      <div id="resultsSection" class="results-section hidden">
+        <div class="results-header">
+          <h2>Results</h2>
+          <button id="copyBtn" class="icon-btn" title="Copy improved text">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>
+            </svg>
+          </button>
+        </div>
+
+        <div class="results-grid">
+          <div class="result-card reading-level">
+            <div class="result-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/>
+              </svg>
+            </div>
+            <div class="result-content">
+              <span class="result-label">Reading Level</span>
+              <span id="readingLevel" class="result-value">--</span>
+            </div>
+          </div>
+
+          <div class="result-card tone-card">
+            <div class="result-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/>
+              </svg>
+            </div>
+            <div class="result-content">
+              <span class="result-label">Detected Tone</span>
+              <span id="detectedTone" class="result-value">--</span>
+            </div>
+          </div>
+
+          <div class="result-card score-card">
+            <div class="result-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
+              </svg>
+            </div>
+            <div class="result-content">
+              <span class="result-label">Writing Score</span>
+              <span id="writingScore" class="result-value">--</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="improved-text-section">
+          <h3>Improved Text</h3>
+          <div id="improvedText" class="improved-text"></div>
+        </div>
+
+        <div class="suggestions-section">
+          <h3>Suggestions</h3>
+          <ul id="suggestionsList" class="suggestions-list"></ul>
+        </div>
+
+        <div id="grammarIssues" class="grammar-issues hidden">
+          <h3>Grammar Issues</h3>
+          <ul id="grammarList" class="grammar-list"></ul>
+        </div>
+      </div>
+
+      <div class="history-section">
+        <div class="history-header">
+          <h2>History</h2>
+          <button id="clearHistoryBtn" class="text-btn">Clear All</button>
+        </div>
+        <div id="historyList" class="history-list">
+          <p class="empty-state">No improvements yet</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="ai-utils.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

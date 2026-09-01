@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Session Manager Pro</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="app">
+    <header class="header">
+      <div class="header-top">
+        <div class="logo">
+          <svg width="20" height="20" viewBox="0 0 128 128" fill="none">
+            <rect x="16" y="24" width="96" height="80" rx="8" stroke="currentColor" stroke-width="6" fill="none"/>
+            <rect x="28" y="36" width="72" height="56" rx="4" stroke="currentColor" stroke-width="4" fill="none"/>
+            <circle cx="64" cy="64" r="12" fill="currentColor"/>
+            <rect x="56" y="20" width="16" height="8" rx="4" fill="currentColor"/>
+          </svg>
+          <h1>Session Manager Pro</h1>
+        </div>
+        <button id="settingsBtn" class="icon-btn" title="Settings">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="3"/><path d="M12 1v4m0 14v4m-7.07-3.93l2.83-2.83m8.48-8.48l2.83-2.83M1 12h4m14 0h4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83"/>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <div class="stats-bar">
+      <div class="stat">
+        <span class="stat-value" id="tabCount">0</span>
+        <span class="stat-label">Tabs</span>
+      </div>
+      <div class="stat">
+        <span class="stat-value" id="windowCount">0</span>
+        <span class="stat-label">Windows</span>
+      </div>
+      <div class="stat">
+        <span class="stat-value" id="sessionCount">0</span>
+        <span class="stat-label">Saved</span>
+      </div>
+    </div>
+
+    <div class="toolbar">
+      <button id="saveSessionBtn" class="btn btn-primary">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 5v14m-7-7h14"/>
+        </svg>
+        Save Session
+      </button>
+      <div class="toolbar-actions">
+        <button id="importBtn" class="icon-btn" title="Import Sessions">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4m4-5l5 5 5-5m-5 5V3"/>
+          </svg>
+        </button>
+        <button id="exportBtn" class="icon-btn" title="Export Sessions">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4m4-5l5-5 5 5m-5-5v12"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="save-panel" id="savePanel" style="display:none;">
+      <div class="save-panel-header">
+        <span>Save Current Session</span>
+        <button id="closeSavePanel" class="icon-btn icon-btn-sm">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18 6L6 18M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+      <input type="text" id="sessionNameInput" placeholder="Session name..." class="input" autocomplete="off"/>
+      <textarea id="sessionNotesInput" placeholder="Optional notes..." class="input textarea" rows="2"></textarea>
+      <div class="save-panel-actions">
+        <label class="toggle-label">
+          <input type="checkbox" id="saveGroupsToggle" checked>
+          <span>Include tab groups</span>
+        </label>
+        <button id="confirmSaveBtn" class="btn btn-primary btn-sm">Save</button>
+      </div>
+    </div>
+
+    <div class="search-bar">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
+      </svg>
+      <input type="text" id="searchInput" placeholder="Search sessions..." class="input" autocomplete="off"/>
+    </div>
+
+    <div class="tabs-header">
+      <button class="tab active" data-view="sessions">Sessions</button>
+      <button class="tab" data-view="tree">Tree View</button>
+    </div>
+
+    <div class="content">
+      <div id="sessionsView" class="view active">
+        <div id="sessionsList" class="sessions-list">
+          <div class="empty-state">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.3">
+              <rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8m-4-4v4"/>
+            </svg>
+            <p>No saved sessions yet</p>
+            <p class="text-muted">Click "Save Session" to get started</p>
+          </div>
+        </div>
+      </div>
+
+      <div id="treeView" class="view">
+        <div id="treeContainer" class="tree-container">
+          <div class="empty-state">
+            <p class="text-muted">Select a session to view tree</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <label class="toggle-label">
+        <input type="checkbox" id="autoSaveToggle">
+        <span>Auto-save</span>
+      </label>
+      <span id="autoSaveInterval" class="text-muted text-sm">every 5 min</span>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="settingsModal" style="display:none;">
+    <div class="modal">
+      <div class="modal-header">
+        <h3>Settings</h3>
+        <button id="closeSettingsBtn" class="icon-btn icon-btn-sm">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18 6L6 18M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="setting-row">
+          <label>Auto-save interval</label>
+          <select id="autoSaveIntervalSelect" class="input select">
+            <option value="1">1 minute</option>
+            <option value="5" selected>5 minutes</option>
+            <option value="15">15 minutes</option>
+            <option value="30">30 minutes</option>
+            <option value="60">1 hour</option>
+          </select>
+        </div>
+        <div class="setting-row">
+          <label>Max saved sessions</label>
+          <input type="number" id="maxSessionsInput" class="input input-sm" value="50" min="5" max="200"/>
+        </div>
+        <div class="setting-row">
+          <label>Duplicate detection</label>
+          <label class="toggle">
+            <input type="checkbox" id="duplicateDetectionToggle" checked>
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+        <div class="setting-row">
+          <button id="clearAllBtn" class="btn btn-danger btn-sm">Clear All Sessions</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="session-manager.js"></script>
+  <script src="tree-view.js"></script>
+  <script src="import-export.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

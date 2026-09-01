@@ -1,0 +1,26 @@
+<svg viewBox="0 0 128 128" width="128" height="128" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#7c3aed;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#a855f7;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="grad2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffd700;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ffed4a;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="128" height="128" rx="28" fill="url(#grad1)"/>
+  <path d="M28 96L44 88L96 36L100 32C106 26 106 16 96 16C86 16 82 22 78 28L28 78L16 108L28 96Z" stroke="white" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M78 28L96 46" stroke="white" stroke-width="5" stroke-linecap="round"/>
+  <path d="M92 12L104 24L92 36L80 24L92 12Z" fill="white"/>
+  <circle cx="52" cy="68" r="5" fill="url(#grad2)"/>
+  <circle cx="70" cy="50" r="4" fill="url(#grad2)"/>
+  <circle cx="42" cy="58" r="3" fill="url(#grad2)"/>
+  <circle cx="60" cy="42" r="2.5" fill="url(#grad2)"/>
+  <circle cx="78" cy="62" r="2" fill="url(#grad2)"/>
+  <circle cx="36" cy="50" r="1.5" fill="url(#grad2)"/>
+  <path d="M46 52L56 62" stroke="url(#grad2)" stroke-width="2" stroke-linecap="round"/>
+  <path d="M64 36L74 46" stroke="url(#grad2)" stroke-width="2" stroke-linecap="round"/>
+  <path d="M50 44L54 48" stroke="url(#grad2)" stroke-width="1.5" stroke-linecap="round"/>
+  <path d="M68 54L72 58" stroke="url(#grad2)" stroke-width="1.5" stroke-linecap="round"/>
+</svg>

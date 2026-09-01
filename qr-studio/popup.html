@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QR Code Studio</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="app">
+    <header class="header">
+      <div class="logo">
+        <svg viewBox="0 0 32 32" class="logo-icon">
+          <rect x="2" y="2" width="10" height="10" rx="1" fill="#6C63FF"/>
+          <rect x="4" y="4" width="6" height="6" rx="0.5" fill="#1a1a2e"/>
+          <rect x="5.5" y="5.5" width="3" height="3" fill="#6C63FF"/>
+          <rect x="20" y="2" width="10" height="10" rx="1" fill="#6C63FF"/>
+          <rect x="22" y="4" width="6" height="6" rx="0.5" fill="#1a1a2e"/>
+          <rect x="23.5" y="5.5" width="3" height="3" fill="#6C63FF"/>
+          <rect x="2" y="20" width="10" height="10" rx="1" fill="#6C63FF"/>
+          <rect x="4" y="22" width="6" height="6" rx="0.5" fill="#1a1a2e"/>
+          <rect x="5.5" y="23.5" width="3" height="3" fill="#6C63FF"/>
+          <rect x="14" y="2" width="4" height="4" fill="#6C63FF"/>
+          <rect x="14" y="14" width="4" height="4" fill="#6C63FF"/>
+          <rect x="2" y="14" width="4" height="4" fill="#6C63FF"/>
+          <rect x="26" y="14" width="4" height="4" fill="#6C63FF"/>
+          <rect x="14" y="26" width="4" height="4" fill="#6C63FF"/>
+          <rect x="20" y="20" width="4" height="4" fill="#6C63FF"/>
+          <rect x="26" y="20" width="4" height="4" fill="#6C63FF"/>
+          <rect x="20" y="26" width="4" height="4" fill="#6C63FF"/>
+          <rect x="26" y="26" width="4" height="4" fill="#6C63FF"/>
+        </svg>
+        <h1>QR Code Studio</h1>
+      </div>
+      <nav class="tabs">
+        <button class="tab active" data-tab="generate">Generate</button>
+        <button class="tab" data-tab="scan">Scan</button>
+        <button class="tab" data-tab="history">History</button>
+      </nav>
+    </header>
+
+    <main class="main">
+      <section id="generate" class="tab-content active">
+        <div class="input-group">
+          <label for="qr-input">Enter text or URL</label>
+          <textarea id="qr-input" placeholder="https://example.com or any text..." rows="3"></textarea>
+        </div>
+
+        <div class="qr-preview">
+          <div id="qr-canvas-container">
+            <canvas id="qr-canvas"></canvas>
+            <div id="qr-placeholder">
+              <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="8" y="8" width="18" height="18" rx="2"/>
+                <rect x="12" y="12" width="10" height="10"/>
+                <rect x="38" y="8" width="18" height="18" rx="2"/>
+                <rect x="42" y="12" width="10" height="10"/>
+                <rect x="8" y="38" width="18" height="18" rx="2"/>
+                <rect x="12" y="42" width="10" height="10"/>
+                <rect x="38" y="38" width="8" height="8"/>
+                <rect x="50" y="38" width="8" height="8"/>
+                <rect x="38" y="50" width="8" height="8"/>
+                <rect x="50" y="50" width="8" height="8"/>
+              </svg>
+              <span>Enter text to generate QR code</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="options-panel">
+          <h3>Customization</h3>
+
+          <div class="option-row">
+            <div class="option">
+              <label for="fg-color">Foreground</label>
+              <div class="color-picker">
+                <input type="color" id="fg-color" value="#000000">
+                <span id="fg-color-value">#000000</span>
+              </div>
+            </div>
+            <div class="option">
+              <label for="bg-color">Background</label>
+              <div class="color-picker">
+                <input type="color" id="bg-color" value="#FFFFFF">
+                <span id="bg-color-value">#FFFFFF</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="option-row">
+            <div class="option">
+              <label for="qr-size">Size</label>
+              <select id="qr-size">
+                <option value="128">128 x 128</option>
+                <option value="256" selected>256 x 256</option>
+                <option value="512">512 x 512</option>
+                <option value="1024">1024 x 1024</option>
+              </select>
+            </div>
+            <div class="option">
+              <label for="ec-level">Error Correction</label>
+              <select id="ec-level">
+                <option value="L">Low (7%)</option>
+                <option value="M" selected>Medium (15%)</option>
+                <option value="Q">Quartile (25%)</option>
+                <option value="H">High (30%)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="option-row">
+            <div class="option full-width">
+              <label for="qr-margin">Margin</label>
+              <input type="range" id="qr-margin" min="0" max="10" value="4">
+              <span id="margin-value">4</span>
+            </div>
+          </div>
+
+          <div class="option-row">
+            <div class="option full-width">
+              <label for="logo-upload">Logo (optional)</label>
+              <div class="file-input-wrapper">
+                <input type="file" id="logo-upload" accept="image/*">
+                <button class="btn btn-secondary" id="logo-btn">Choose Logo</button>
+                <span id="logo-filename">No file chosen</span>
+                <button class="btn btn-small btn-danger" id="logo-remove" style="display:none">Remove</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button class="btn btn-primary" id="download-png">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
+              <polyline points="7 10 12 15 17 10"/>
+              <line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+            PNG
+          </button>
+          <button class="btn btn-primary" id="download-svg">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
+              <polyline points="7 10 12 15 17 10"/>
+              <line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+            SVG
+          </button>
+          <button class="btn btn-secondary" id="copy-clipboard">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+              <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>
+            </svg>
+            Copy
+          </button>
+        </div>
+
+        <div class="batch-section">
+          <h3>Batch Generation</h3>
+          <div class="input-group">
+            <textarea id="batch-input" placeholder="Enter multiple URLs or texts, one per line..." rows="4"></textarea>
+          </div>
+          <button class="btn btn-primary" id="batch-generate">Generate All</button>
+          <div id="batch-results" class="batch-results"></div>
+        </div>
+      </section>
+
+      <section id="scan" class="tab-content">
+        <div class="scanner-container">
+          <div class="video-wrapper">
+            <video id="scan-video" autoplay playsinline></video>
+            <div class="scan-overlay">
+              <div class="scan-frame">
+                <div class="corner tl"></div>
+                <div class="corner tr"></div>
+                <div class="corner bl"></div>
+                <div class="corner br"></div>
+              </div>
+              <div class="scan-line"></div>
+            </div>
+          </div>
+
+          <div class="scanner-controls">
+            <button class="btn btn-primary" id="start-scan">Start Scanner</button>
+            <button class="btn btn-danger" id="stop-scan" style="display:none">Stop Scanner</button>
+          </div>
+
+          <div class="scan-result" id="scan-result" style="display:none">
+            <h3>Detected QR Code</h3>
+            <div class="result-content">
+              <p id="result-text"></p>
+              <div class="result-actions">
+                <button class="btn btn-primary" id="copy-result">Copy</button>
+                <button class="btn btn-secondary" id="open-result">Open URL</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="scan-history" id="scan-history">
+            <h3>Scan History</h3>
+            <ul id="scan-history-list"></ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="history" class="tab-content">
+        <div class="history-container">
+          <div class="history-header">
+            <h3>Generation History</h3>
+            <button class="btn btn-small btn-danger" id="clear-history">Clear All</button>
+          </div>
+          <ul id="history-list" class="history-list"></ul>
+          <div id="no-history" class="no-history">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/>
+              <polyline points="12 6 12 12 16 14"/>
+            </svg>
+            <p>No history yet</p>
+            <span>Generated QR codes will appear here</span>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="qr-generator.js"></script>
+  <script src="qr-scanner.js"></script>
+  <script src="canvas-utils.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>
