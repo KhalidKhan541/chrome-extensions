@@ -1,0 +1,90 @@
+#scroll-navigator-progress {
+  position: fixed;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 4px;
+  height: 120px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 2px;
+  z-index: 2147483647;
+  cursor: pointer;
+  transition: opacity 0.3s ease, width 0.2s ease;
+  backdrop-filter: blur(4px);
+}
+
+#scroll-navigator-progress:hover {
+  width: 8px;
+}
+
+#scroll-navigator-progress:hover .sn-progress-tooltip {
+  opacity: 1;
+  transform: translateX(-100%) translateY(-50%);
+}
+
+.sn-progress-fill {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 0%;
+  background: linear-gradient(to top, #6366f1, #8b5cf6);
+  border-radius: 2px;
+  transition: height 0.1s ease-out;
+  box-shadow: 0 0 6px rgba(99, 102, 241, 0.4);
+}
+
+.sn-progress-tooltip {
+  position: absolute;
+  right: 100%;
+  top: 50%;
+  transform: translateX(calc(-100% - 12px)) translateY(-50%);
+  background: #18181b;
+  color: #e4e4e7;
+  padding: 3px 6px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+#scroll-navigator-float {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 2147483647;
+  opacity: 0;
+  transform: translateY(20px) scale(0.8);
+  transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+  pointer-events: none;
+  color: white;
+}
+
+#scroll-navigator-float.sn-visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+#scroll-navigator-float:hover {
+  transform: translateY(0) scale(1.1);
+  box-shadow: 0 6px 16px rgba(99, 102, 241, 0.5);
+}
+
+#scroll-navigator-float:active {
+  transform: translateY(0) scale(0.95);
+}

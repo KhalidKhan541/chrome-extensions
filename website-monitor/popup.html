@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Website Monitor</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="app">
+    <header class="header">
+      <div class="logo">
+        <svg viewBox="0 0 24 24" class="logo-icon">
+          <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/>
+          <circle cx="12" cy="12" r="4" fill="currentColor"/>
+          <path d="M12 2v4M12 18v4M2 12h4M18 12h4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <h1>Website Monitor</h1>
+      </div>
+      <div class="header-actions">
+        <button id="settingsBtn" class="icon-btn" title="Settings">
+          <svg viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58a.49.49 0 00.12-.61l-1.92-3.32a.49.49 0 00-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54a.484.484 0 00-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96a.49.49 0 00-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.07.62-.07.94s.02.64.07.94l-2.03 1.58a.49.49 0 00-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6A3.6 3.6 0 1115.6 12 3.6 3.6 0 0112 15.6z" fill="currentColor"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="main">
+      <!-- Site List View -->
+      <div id="siteListView" class="view active">
+        <div class="toolbar">
+          <button id="addSiteBtn" class="btn btn-primary">
+            <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" fill="currentColor"/></svg>
+            Add Website
+          </button>
+          <button id="checkAllBtn" class="btn btn-secondary">
+            <svg viewBox="0 0 24 24"><path d="M17.65 6.35A7.958 7.958 0 0012 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08A5.99 5.99 0 0112 18c-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z" fill="currentColor"/></svg>
+            Check All
+          </button>
+        </div>
+
+        <div id="siteList" class="site-list">
+          <div class="empty-state">
+            <svg viewBox="0 0 24 24" class="empty-icon">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" fill="currentColor"/>
+            </svg>
+            <p>No websites monitored</p>
+            <span>Click "Add Website" to start monitoring</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Add/Edit Site View -->
+      <div id="addSiteView" class="view">
+        <div class="view-header">
+          <button id="backBtn" class="icon-btn">
+            <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" fill="currentColor"/></svg>
+          </button>
+          <h2 id="formTitle">Add Website</h2>
+        </div>
+        <form id="siteForm" class="form">
+          <div class="form-group">
+            <label for="siteName">Name</label>
+            <input type="text" id="siteName" placeholder="My Website" required>
+          </div>
+          <div class="form-group">
+            <label for="siteUrl">URL</label>
+            <input type="url" id="siteUrl" placeholder="https://example.com" required>
+          </div>
+          <div class="form-group">
+            <label for="checkFrequency">Check Frequency</label>
+            <select id="checkFrequency">
+              <option value="15">Every 15 minutes</option>
+              <option value="30">Every 30 minutes</option>
+              <option value="60" selected>Every hour</option>
+              <option value="360">Every 6 hours</option>
+              <option value="1440">Daily</option>
+              <option value="10080">Weekly</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="selector">CSS Selector (optional)</label>
+            <input type="text" id="selector" placeholder=".content, #main, body">
+            <span class="help-text">Leave empty to monitor entire page</span>
+          </div>
+          <div class="form-group">
+            <label>Ignore Patterns</label>
+            <div class="ignore-patterns">
+              <label class="checkbox">
+                <input type="checkbox" id="ignoreTimestamps" checked>
+                <span>Timestamps</span>
+              </label>
+              <label class="checkbox">
+                <input type="checkbox" id="ignoreAds" checked>
+                <span>Ads & Analytics</span>
+              </label>
+              <label class="checkbox">
+                <input type="checkbox" id="ignoreWhitespace">
+                <span>Whitespace changes</span>
+              </label>
+            </div>
+          </div>
+          <div class="form-actions">
+            <button type="button" id="cancelBtn" class="btn btn-secondary">Cancel</button>
+            <button type="submit" class="btn btn-primary">Save</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Site Detail View -->
+      <div id="siteDetailView" class="view">
+        <div class="view-header">
+          <button id="detailBackBtn" class="icon-btn">
+            <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" fill="currentColor"/></svg>
+          </button>
+          <h2 id="detailTitle">Site Details</h2>
+          <div class="header-actions">
+            <button id="editSiteBtn" class="icon-btn" title="Edit">
+              <svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a1 1 0 000-1.41l-2.34-2.34a1 1 0 00-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z" fill="currentColor"/></svg>
+            </button>
+            <button id="deleteSiteBtn" class="icon-btn danger" title="Delete">
+              <svg viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z" fill="currentColor"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="detail-content">
+          <div class="detail-info">
+            <div class="info-row">
+              <span class="label">URL</span>
+              <a id="detailUrl" href="#" target="_blank" class="value link"></a>
+            </div>
+            <div class="info-row">
+              <span class="label">Status</span>
+              <span id="detailStatus" class="value status-badge"></span>
+            </div>
+            <div class="info-row">
+              <span class="label">Last Checked</span>
+              <span id="detailLastChecked" class="value"></span>
+            </div>
+            <div class="info-row">
+              <span class="label">Frequency</span>
+              <span id="detailFrequency" class="value"></span>
+            </div>
+            <div class="info-row">
+              <span class="label">Changes Detected</span>
+              <span id="detailChanges" class="value"></span>
+            </div>
+          </div>
+
+          <div class="detail-actions">
+            <button id="checkNowBtn" class="btn btn-primary btn-block">
+              <svg viewBox="0 0 24 24"><path d="M17.65 6.35A7.958 7.958 0 0012 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08A5.99 5.99 0 0112 18c-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z" fill="currentColor"/></svg>
+              Check Now
+            </button>
+          </div>
+
+          <div class="detail-tabs">
+            <button class="tab active" data-tab="history">History</button>
+            <button class="tab" data-tab="diff">Latest Diff</button>
+            <button class="tab" data-tab="settings">Settings</button>
+          </div>
+
+          <div id="historyTab" class="tab-content active">
+            <div id="historyList" class="history-list">
+              <div class="empty-state small">
+                <p>No changes recorded yet</p>
+              </div>
+            </div>
+          </div>
+
+          <div id="diffTab" class="tab-content">
+            <div id="diffViewer" class="diff-viewer">
+              <div class="empty-state small">
+                <p>No diff available</p>
+                <span>Check the site to generate a diff</span>
+              </div>
+            </div>
+          </div>
+
+          <div id="settingsTab" class="tab-content">
+            <form id="siteSettingsForm" class="form compact">
+              <div class="form-group">
+                <label for="editFrequency">Check Frequency</label>
+                <select id="editFrequency">
+                  <option value="15">Every 15 minutes</option>
+                  <option value="30">Every 30 minutes</option>
+                  <option value="60">Every hour</option>
+                  <option value="360">Every 6 hours</option>
+                  <option value="1440">Daily</option>
+                  <option value="10080">Weekly</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="editSelector">CSS Selector</label>
+                <input type="text" id="editSelector" placeholder=".content, #main, body">
+              </div>
+              <div class="form-group">
+                <label class="checkbox">
+                  <input type="checkbox" id="editNotifications">
+                  <span>Enable notifications</span>
+                </label>
+              </div>
+              <button type="submit" class="btn btn-primary btn-block">Save Settings</button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Settings View -->
+      <div id="settingsView" class="view">
+        <div class="view-header">
+          <button id="settingsBackBtn" class="icon-btn">
+            <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" fill="currentColor"/></svg>
+          </button>
+          <h2>Settings</h2>
+        </div>
+        <div class="settings-content">
+          <div class="settings-section">
+            <h3>Notifications</h3>
+            <div class="form-group">
+              <label class="checkbox">
+                <input type="checkbox" id="globalNotifications" checked>
+                <span>Enable notifications</span>
+              </label>
+            </div>
+            <div class="form-group">
+              <label class="checkbox">
+                <input type="checkbox" id="soundAlerts" checked>
+                <span>Sound alerts</span>
+              </label>
+            </div>
+          </div>
+          <div class="settings-section">
+            <h3>Global Defaults</h3>
+            <div class="form-group">
+              <label for="defaultFrequency">Default Check Frequency</label>
+              <select id="defaultFrequency">
+                <option value="15">Every 15 minutes</option>
+                <option value="30">Every 30 minutes</option>
+                <option value="60" selected>Every hour</option>
+                <option value="360">Every 6 hours</option>
+                <option value="1440">Daily</option>
+                <option value="10080">Weekly</option>
+              </select>
+            </div>
+          </div>
+          <div class="settings-section">
+            <h3>Data</h3>
+            <button id="exportDataBtn" class="btn btn-secondary btn-block">Export Data</button>
+            <button id="clearHistoryBtn" class="btn btn-danger btn-block">Clear All History</button>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="diff-engine.js"></script>
+  <script src="monitor.js"></script>
+  <script src="notification-manager.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

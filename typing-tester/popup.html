@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=420, initial-scale=1.0">
+  <title>Typing Speed Tester</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div id="app">
+    <header id="header">
+      <div class="logo">
+        <span class="logo-icon">⌨</span>
+        <h1>Typing Speed Tester</h1>
+      </div>
+      <div class="header-actions">
+        <button id="btn-settings" class="icon-btn" title="Settings">⚙</button>
+        <button id="btn-history" class="icon-btn" title="History">📊</button>
+      </div>
+    </header>
+
+    <!-- Settings Panel -->
+    <div id="settings-panel" class="panel hidden">
+      <div class="panel-header">
+        <h2>Settings</h2>
+        <button class="close-btn" data-close="settings-panel">✕</button>
+      </div>
+      <div class="settings-content">
+        <div class="setting-row">
+          <label>Theme</label>
+          <select id="setting-theme">
+            <option value="dark">Dark</option>
+            <option value="midnight">Midnight</option>
+            <option value="monokai">Monokai</option>
+          </select>
+        </div>
+        <div class="setting-row">
+          <label>Difficulty</label>
+          <select id="setting-difficulty">
+            <option value="easy">Easy</option>
+            <option value="medium" selected>Medium</option>
+            <option value="hard">Hard</option>
+          </select>
+        </div>
+        <div class="setting-row">
+          <label>Sound Effects</label>
+          <label class="toggle">
+            <input type="checkbox" id="setting-sound" checked>
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+        <div class="setting-row">
+          <label>Show Timer</label>
+          <label class="toggle">
+            <input type="checkbox" id="setting-timer" checked>
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+        <div class="setting-row danger">
+          <label>Reset All Data</label>
+          <button id="btn-clear-stats" class="btn-danger">Clear</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- History Panel -->
+    <div id="history-panel" class="panel hidden">
+      <div class="panel-header">
+        <h2>History & Stats</h2>
+        <button class="close-btn" data-close="history-panel">✕</button>
+      </div>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <span class="stat-value" id="stat-best">0</span>
+          <span class="stat-label">Best WPM</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-value" id="stat-avg">0</span>
+          <span class="stat-label">Avg WPM</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-value" id="stat-acc">0%</span>
+          <span class="stat-label">Avg Accuracy</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-value" id="stat-total">0</span>
+          <span class="stat-label">Total Tests</span>
+        </div>
+      </div>
+      <div class="chart-container">
+        <h3>WPM Progress</h3>
+        <canvas id="chart-wpm"></canvas>
+      </div>
+      <div class="chart-container">
+        <h3>Accuracy Progress</h3>
+        <canvas id="chart-accuracy"></canvas>
+      </div>
+      <div id="leaderboard">
+        <h3>Recent Tests</h3>
+        <div id="leaderboard-list"></div>
+      </div>
+    </div>
+
+    <!-- Mode Selection -->
+    <div id="mode-bar">
+      <div class="mode-group">
+        <label>Duration:</label>
+        <div class="btn-group" id="mode-buttons">
+          <button class="mode-btn active" data-mode="quick">30s</button>
+          <button class="mode-btn" data-mode="standard">60s</button>
+          <button class="mode-btn" data-mode="marathon">5m</button>
+        </div>
+      </div>
+      <div class="mode-group">
+        <label>Category:</label>
+        <div class="btn-group" id="category-buttons">
+          <button class="mode-btn active" data-category="common">Common</button>
+          <button class="mode-btn" data-category="code">Code</button>
+          <button class="mode-btn" data-category="quotes">Quotes</button>
+          <button class="mode-btn" data-category="technical">Technical</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Timer & Stats Bar -->
+    <div id="stats-bar">
+      <div class="stat-item">
+        <span class="stat-number" id="display-wpm">0</span>
+        <span class="stat-desc">WPM</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number" id="display-accuracy">100</span>
+        <span class="stat-desc">%</span>
+      </div>
+      <div class="stat-item timer-item">
+        <span class="stat-number timer" id="display-timer">30</span>
+        <span class="stat-desc">sec</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number" id="display-errors">0</span>
+        <span class="stat-desc">errors</span>
+      </div>
+    </div>
+
+    <!-- Typing Area -->
+    <div id="typing-area">
+      <div id="text-display"></div>
+      <textarea id="typing-input" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Click here and start typing..."></textarea>
+    </div>
+
+    <!-- Progress Bar -->
+    <div id="progress-bar">
+      <div id="progress-fill"></div>
+    </div>
+
+    <!-- Controls -->
+    <div id="controls">
+      <button id="btn-restart" class="ctrl-btn primary">↻ Restart</button>
+      <button id="btn-new-text" class="ctrl-btn">New Text</button>
+    </div>
+
+    <!-- Results Overlay -->
+    <div id="results-overlay" class="hidden">
+      <div id="results-card">
+        <h2>Test Complete!</h2>
+        <div class="results-grid">
+          <div class="result-item">
+            <span class="result-value" id="result-wpm">0</span>
+            <span class="result-label">WPM</span>
+          </div>
+          <div class="result-item">
+            <span class="result-value" id="result-raw-wpm">0</span>
+            <span class="result-label">Raw WPM</span>
+          </div>
+          <div class="result-item">
+            <span class="result-value" id="result-accuracy">0%</span>
+            <span class="result-label">Accuracy</span>
+          </div>
+          <div class="result-item">
+            <span class="result-value" id="result-errors">0</span>
+            <span class="result-label">Errors</span>
+          </div>
+        </div>
+        <div class="results-message" id="results-message"></div>
+        <div class="results-actions">
+          <button id="btn-results-restart" class="ctrl-btn primary">Try Again</button>
+          <button id="btn-results-close" class="ctrl-btn">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="word-lists.js"></script>
+  <script src="typing-engine.js"></script>
+  <script src="stats-manager.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

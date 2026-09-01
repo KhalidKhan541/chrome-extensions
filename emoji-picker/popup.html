@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Emoji Picker</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="emoji-picker">
+    <div class="header">
+      <h1>Emoji Picker</h1>
+    </div>
+
+    <div class="search-container">
+      <input type="text" id="search-input" placeholder="Search emojis..." autocomplete="off">
+      <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="11" cy="11" r="8"/>
+        <path d="m21 21-4.3-4.3"/>
+      </svg>
+    </div>
+
+    <div class="category-tabs" id="category-tabs">
+      <button class="category-tab active" data-category="recent" title="Recent">🕒</button>
+      <button class="category-tab" data-category="smileys" title="Smileys">😀</button>
+      <button class="category-tab" data-category="people" title="People">👋</button>
+      <button class="category-tab" data-category="animals" title="Animals">🐶</button>
+      <button class="category-tab" data-category="food" title="Food">🍕</button>
+      <button class="category-tab" data-category="travel" title="Travel">✈️</button>
+      <button class="category-tab" data-category="activities" title="Activities">⚽</button>
+      <button class="category-tab" data-category="objects" title="Objects">💡</button>
+      <button class="category-tab" data-category="symbols" title="Symbols">❤️</button>
+      <button class="category-tab" data-category="flags" title="Flags">🏁</button>
+    </div>
+
+    <div class="skin-tone-selector" id="skin-tone-selector">
+      <span class="skin-tone-label">Skin tone:</span>
+      <button class="skin-tone active" data-tone="default" title="Default">✋</button>
+      <button class="skin-tone" data-tone="light" title="Light">✋🏻</button>
+      <button class="skin-tone" data-tone="medium-light" title="Medium-Light">✋🏽</button>
+      <button class="skin-tone" data-tone="medium" title="Medium">✋🏾</button>
+      <button class="skin-tone" data-tone="medium-dark" title="Medium-Dark">✋🏿</button>
+      <button class="skin-tone" data-tone="dark" title="Dark">✋🏿</button>
+    </div>
+
+    <div class="emoji-section" id="recent-section">
+      <div class="section-header">
+        <span>Recently Used</span>
+      </div>
+      <div class="emoji-grid" id="recent-grid"></div>
+    </div>
+
+    <div class="emoji-section" id="emoji-section">
+      <div class="section-header">
+        <span id="section-title">All Emojis</span>
+      </div>
+      <div class="emoji-grid" id="emoji-grid"></div>
+    </div>
+
+    <div class="history-panel" id="history-panel">
+      <div class="section-header">
+        <span>Copy History</span>
+        <button class="clear-history" id="clear-history">Clear</button>
+      </div>
+      <div class="history-list" id="history-list"></div>
+    </div>
+
+    <div class="footer">
+      <span class="shortcut-hint">Ctrl+Shift+E to toggle panel</span>
+    </div>
+
+    <div class="copy-toast" id="copy-toast">Copied!</div>
+  </div>
+
+  <script src="emoji-database.js"></script>
+  <script src="emoji-utils.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

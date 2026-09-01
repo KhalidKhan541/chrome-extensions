@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tab Limiter</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Tab Limiter</h1>
+      <div class="master-toggle">
+        <label class="toggle">
+          <input type="checkbox" id="enableToggle" checked>
+          <span class="slider"></span>
+        </label>
+      </div>
+    </header>
+
+    <!-- Tab Count Display -->
+    <section class="tab-count-section">
+      <div class="tab-count-display">
+        <span id="currentCount">0</span>
+        <span class="separator">/</span>
+        <span id="limitDisplay">0</span>
+        <span class="label">tabs</span>
+      </div>
+      <div class="progress-bar-container">
+        <div class="progress-bar" id="progressBar">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+      </div>
+      <div class="count-info">
+        <span id="windowTabs">0</span> in current window
+      </div>
+    </section>
+
+    <!-- Limit Setting -->
+    <section class="setting-section">
+      <label for="tabLimitInput">Tab Limit</label>
+      <div class="limit-input-row">
+        <input type="range" id="tabLimitSlider" min="5" max="100" value="30" class="slider-input">
+        <input type="number" id="tabLimitInput" min="5" max="500" value="30" class="number-input">
+      </div>
+      <div class="preset-buttons">
+        <button class="preset-btn" data-limit="10">10</button>
+        <button class="preset-btn" data-limit="20">20</button>
+        <button class="preset-btn" data-limit="30">30</button>
+        <button class="preset-btn" data-limit="50">50</button>
+      </div>
+    </section>
+
+    <!-- Close Strategy -->
+    <section class="setting-section">
+      <label for="strategySelect">Close Strategy</label>
+      <select id="strategySelect" class="select-input">
+        <option value="oldest">Oldest First</option>
+        <option value="leastUsed">Least Used</option>
+        <option value="newest">Newest First</option>
+        <option value="random">Random</option>
+        <option value="leastImportant">Least Important</option>
+      </select>
+    </section>
+
+    <!-- Whitelist -->
+    <section class="setting-section">
+      <label>Whitelisted Domains <span class="hint">(always allowed)</span></label>
+      <div class="whitelist-input-row">
+        <input type="text" id="whitelistInput" placeholder="example.com" class="text-input">
+        <button id="addWhitelistBtn" class="add-btn">+</button>
+      </div>
+      <ul id="whitelistList" class="tag-list"></ul>
+    </section>
+
+    <!-- Statistics -->
+    <section class="stats-section">
+      <h3>Statistics</h3>
+      <div class="stats-grid">
+        <div class="stat-item">
+          <span class="stat-value" id="totalClosed">0</span>
+          <span class="stat-label">Tabs Closed</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-value" id="totalSessions">0</span>
+          <span class="stat-label">Sessions Saved</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-value" id="avgTabsKept">0</span>
+          <span class="stat-label">Avg Tabs Kept</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Closed Tabs History -->
+    <section class="history-section">
+      <h3>Recently Closed <button id="clearHistoryBtn" class="clear-btn">Clear</button></h3>
+      <ul id="historyList" class="history-list"></ul>
+    </section>
+
+    <!-- Emergency Unlock -->
+    <section class="emergency-section">
+      <button id="emergencyUnlockBtn" class="emergency-btn">Emergency Unlock</button>
+      <button id="undoCloseBtn" class="undo-btn">Undo Last Close</button>
+    </section>
+  </div>
+
+  <script src="history-manager.js"></script>
+  <script src="tab-enforcer.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

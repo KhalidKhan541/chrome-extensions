@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scroll Navigator</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="popup-header">
+    <h1>Scroll Navigator</h1>
+    <span class="version">v1.0</span>
+  </div>
+
+  <div class="tab-bar">
+    <div class="tab active" data-tab="main">Scroll</div>
+    <div class="tab" data-tab="history">History</div>
+    <div class="tab" data-tab="bookmarks">Bookmarks</div>
+    <div class="tab" data-tab="settings">Settings</div>
+  </div>
+
+  <div id="tab-main" class="tab-content active">
+    <div class="section">
+      <div class="scroll-indicator" id="scrollIndicator">
+        <div class="scroll-track"></div>
+        <div class="scroll-thumb" id="scrollThumb"></div>
+        <div class="scroll-percent" id="scrollPercent">0%</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Navigation</div>
+      <div class="controls-row">
+        <button class="btn" id="btnTop">Back to Top</button>
+        <button class="btn" id="btnBottom">Go to Bottom</button>
+      </div>
+      <div class="controls-row">
+        <button class="btn" id="btnPageUp">Page Up</button>
+        <button class="btn" id="btnPageDown">Page Down</button>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Scroll Speed</div>
+      <div class="speed-control">
+        <label>Speed</label>
+        <input type="range" class="speed-slider" id="speedSlider" min="0.5" max="5" step="0.5" value="1">
+        <span class="speed-value" id="speedValue">1.0x</span>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Options</div>
+      <div class="toggle-row">
+        <label>Smooth Scroll</label>
+        <div class="toggle active" id="toggleSmooth"></div>
+      </div>
+      <div class="toggle-row">
+        <label>Auto-Scroll</label>
+        <div class="toggle" id="toggleAuto"></div>
+      </div>
+      <div class="toggle-row">
+        <label>Side Progress Bar</label>
+        <div class="toggle active" id="toggleProgress"></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Keyboard Shortcuts</div>
+      <div class="shortcuts-grid">
+        <div class="shortcut"><span class="action">Top</span><kbd>Ctrl+Shift+Up</kbd></div>
+        <div class="shortcut"><span class="action">Bottom</span><kbd>Ctrl+Shift+Dn</kbd></div>
+        <div class="shortcut"><span class="action">Page Up</span><kbd>Alt+Up</kbd></div>
+        <div class="shortcut"><span class="action">Page Down</span><kbd>Alt+Down</kbd></div>
+        <div class="shortcut"><span class="action">Auto-Scroll</span><kbd>Alt+A</kbd></div>
+        <div class="shortcut"><span class="action">Smooth</span><kbd>Alt+S</kbd></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="tab-history" class="tab-content">
+    <div class="section">
+      <div class="section-title">Scroll History</div>
+      <div class="history-list" id="historyList">
+        <div class="empty-state">No scroll history yet</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="tab-bookmarks" class="tab-content">
+    <div class="section">
+      <div class="section-title">Saved Positions</div>
+      <div id="bookmarkList">
+        <div class="empty-state">No bookmarks saved</div>
+      </div>
+      <div class="bookmark-input">
+        <input type="text" id="bookmarkName" placeholder="Name this position...">
+        <button id="btnAddBookmark">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="tab-settings" class="tab-content">
+    <div class="site-settings">
+      <div class="section-title">Per-Site Settings</div>
+      <select class="site-select" id="siteSelect">
+        <option value="global">Global Defaults</option>
+      </select>
+      <div id="siteOptions">
+        <div class="toggle-row">
+          <label>Override Global Settings</label>
+          <div class="toggle" id="toggleSiteOverride"></div>
+        </div>
+        <div class="toggle-row">
+          <label>Smooth Scroll</label>
+          <div class="toggle active" id="toggleSiteSmooth"></div>
+        </div>
+        <div class="toggle-row">
+          <label>Auto-Scroll</label>
+          <div class="toggle" id="toggleSiteAuto"></div>
+        </div>
+        <div class="toggle-row">
+          <label>Side Progress Bar</label>
+          <div class="toggle active" id="toggleSiteProgress"></div>
+        </div>
+        <div class="speed-control" style="margin-top:8px">
+          <label>Speed</label>
+          <input type="range" class="speed-slider" id="siteSpeedSlider" min="0.5" max="5" step="0.5" value="1">
+          <span class="speed-value" id="siteSpeedValue">1.0x</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
