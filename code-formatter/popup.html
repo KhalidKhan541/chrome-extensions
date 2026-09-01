@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Code Formatter</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <div class="logo">
+        <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="16 18 22 12 16 6"></polyline>
+          <polyline points="8 6 2 12 8 18"></polyline>
+        </svg>
+        <h1>Code Formatter</h1>
+      </div>
+      <div class="language-selector">
+        <select id="language">
+          <option value="auto">Auto Detect</option>
+          <option value="javascript">JavaScript</option>
+          <option value="python">Python</option>
+          <option value="html">HTML</option>
+          <option value="css">CSS</option>
+          <option value="json">JSON</option>
+          <option value="sql">SQL</option>
+        </select>
+      </div>
+    </header>
+
+    <div class="editor-section">
+      <div class="editor-panel">
+        <div class="panel-header">
+          <span class="panel-title">Input</span>
+          <div class="panel-actions">
+            <button id="clearBtn" class="btn-small" title="Clear">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </button>
+            <button id="pasteBtn" class="btn-small" title="Paste from clipboard">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14">
+                <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
+                <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
+              </svg>
+            </button>
+          </div>
+        </div>
+        <div class="editor-wrapper">
+          <div class="line-numbers" id="lineNumbers">1</div>
+          <textarea id="inputCode" placeholder="Paste or type your code here..." spellcheck="false"></textarea>
+        </div>
+      </div>
+
+      <div class="editor-panel">
+        <div class="panel-header">
+          <span class="panel-title">Output</span>
+          <div class="panel-actions">
+            <button id="copyBtn" class="btn-small" title="Copy to clipboard">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+        <div class="editor-wrapper">
+          <div class="line-numbers" id="outputLineNumbers">1</div>
+          <textarea id="outputCode" readonly placeholder="Formatted code will appear here..." spellcheck="false"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="controls-section">
+      <div class="controls-row">
+        <div class="control-group">
+          <label>Indent Size</label>
+          <select id="indentSize">
+            <option value="2">2 spaces</option>
+            <option value="4" selected>4 spaces</option>
+            <option value="8">8 spaces</option>
+          </select>
+        </div>
+        <div class="control-group">
+          <label>Quote Style</label>
+          <select id="quoteStyle">
+            <option value="single">Single Quotes</option>
+            <option value="double">Double Quotes</option>
+          </select>
+        </div>
+        <div class="control-group" id="semicolonGroup">
+          <label>Semicolons</label>
+          <select id="useSemicolons">
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+          </select>
+        </div>
+        <div class="control-group">
+          <label>Trailing Comma</label>
+          <select id="trailingComma">
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="button-section">
+      <button id="formatBtn" class="btn-primary">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+          <line x1="21" y1="10" x2="3" y2="10"></line>
+          <line x1="21" y1="6" x2="3" y2="6"></line>
+          <line x1="21" y1="14" x2="3" y2="14"></line>
+          <line x1="21" y1="18" x2="3" y2="18"></line>
+        </svg>
+        Format
+      </button>
+      <button id="minifyBtn" class="btn-secondary">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+        </svg>
+        Minify
+      </button>
+    </div>
+
+    <div class="snippets-section">
+      <div class="section-header">
+        <h2>Snippets</h2>
+        <div class="section-actions">
+          <button id="saveSnippetBtn" class="btn-tiny" title="Save current code">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12">
+              <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+              <polyline points="17 21 17 13 7 13 7 21"></polyline>
+              <polyline points="7 3 7 8 15 8"></polyline>
+            </svg>
+            Save
+          </button>
+          <button id="importBtn" class="btn-tiny" title="Import snippets">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="7 10 12 15 17 10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+            Import
+          </button>
+          <button id="exportBtn" class="btn-tiny" title="Export snippets">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="17 8 12 3 7 8"></polyline>
+              <line x1="12" y1="3" x2="12" y2="15"></line>
+            </svg>
+            Export
+          </button>
+        </div>
+      </div>
+      <div id="snippetsList" class="snippets-list"></div>
+    </div>
+
+    <div class="history-section">
+      <div class="section-header">
+        <h2>History</h2>
+        <button id="clearHistoryBtn" class="btn-tiny">Clear</button>
+      </div>
+      <div id="historyList" class="history-list"></div>
+    </div>
+  </div>
+
+  <input type="file" id="importFileInput" accept=".json" style="display: none;">
+
+  <script src="formatter-core.js"></script>
+  <script src="formatters/javascript.js"></script>
+  <script src="formatters/python.js"></script>
+  <script src="formatters/html.js"></script>
+  <script src="formatters/css.js"></script>
+  <script src="formatters/json.js"></script>
+  <script src="formatters/sql.js"></script>
+  <script src="snippet-manager.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

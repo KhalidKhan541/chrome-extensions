@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1e1e1e"/>
+      <stop offset="100%" style="stop-color:#2d2d2d"/>
+    </linearGradient>
+  </defs>
+  <rect width="128" height="128" rx="20" fill="url(#bg)"/>
+  <g transform="translate(16, 24)">
+    <text x="8" y="48" font-family="Consolas, monospace" font-size="44" font-weight="bold" fill="#ce9178">/</text>
+    <text x="26" y="48" font-family="Consolas, monospace" font-size="44" font-weight="bold" fill="#d4d4d4">.*</text>
+    <text x="62" y="48" font-family="Consolas, monospace" font-size="44" font-weight="bold" fill="#ce9178">/</text>
+    <text x="72" y="48" font-family="Consolas, monospace" font-size="26" font-weight="bold" fill="#569cd6">g</text>
+    <rect x="8" y="60" width="76" height="4" rx="2" fill="#007acc"/>
+    <circle cx="20" cy="62" r="3" fill="#4ec9b0"/>
+    <circle cx="40" cy="62" r="3" fill="#c586c0"/>
+    <circle cx="60" cy="62" r="3" fill="#dcdcaa"/>
+    <rect x="8" y="72" width="56" height="3" rx="1.5" fill="#404040"/>
+    <rect x="8" y="80" width="40" height="3" rx="1.5" fill="#404040"/>
+  </g>
+</svg>

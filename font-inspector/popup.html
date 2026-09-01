@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Font Inspector</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <div class="logo">
+        <svg class="logo-icon" viewBox="0 0 32 32" width="24" height="24">
+          <rect x="4" y="4" width="24" height="24" rx="4" fill="#6366f1"/>
+          <text x="16" y="22" text-anchor="middle" fill="white" font-size="16" font-weight="bold" font-family="Arial">F</text>
+        </svg>
+        <h1>Font Inspector</h1>
+      </div>
+      <button id="toggleInspector" class="toggle-btn">
+        <span class="toggle-text">Inspect</span>
+        <span class="toggle-dot"></span>
+      </button>
+    </header>
+
+    <div id="statusBar" class="status-bar inactive">
+      <span class="status-dot"></span>
+      <span class="status-text">Click to inspect</span>
+    </div>
+
+    <div id="inspectorActive" class="inspector-active" style="display: none;">
+      <div class="click-prompt">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M3 3L7 13L9 9L13 7L3 3Z" fill="currentColor"/>
+        </svg>
+        Click any element on the page
+      </div>
+    </div>
+
+    <section id="fontInfoSection" class="section" style="display: none;">
+      <h2 class="section-title">Selected Element Font</h2>
+      <div id="fontInfo" class="font-info">
+        <div class="font-preview-container">
+          <div id="fontPreview" class="font-preview">Aa Bb Cc 123</div>
+          <span id="fontSizePreview" class="size-badge">16px</span>
+        </div>
+        <div class="font-details">
+          <div class="detail-row">
+            <span class="label">Family</span>
+            <span id="fontFamily" class="value">-</span>
+          </div>
+          <div class="detail-row">
+            <span class="label">Size</span>
+            <span id="fontSize" class="value">-</span>
+          </div>
+          <div class="detail-row">
+            <span class="label">Weight</span>
+            <span id="fontWeight" class="value">-</span>
+          </div>
+          <div class="detail-row">
+            <span class="label">Line Height</span>
+            <span id="lineHeight" class="value">-</span>
+          </div>
+          <div class="detail-row">
+            <span class="label">Letter Spacing</span>
+            <span id="letterSpacing" class="value">-</span>
+          </div>
+          <div class="detail-row">
+            <span class="label">Word Spacing</span>
+            <span id="wordSpacing" class="value">-</span>
+          </div>
+          <div class="detail-row">
+            <span class="label">Color</span>
+            <span id="fontColor" class="value color-value">
+              <span class="color-swatch"></span>
+              <span class="color-text">-</span>
+            </span>
+          </div>
+          <div class="detail-row">
+            <span class="label">Text Align</span>
+            <span id="textAlign" class="value">-</span>
+          </div>
+        </div>
+      </div>
+      <div class="actions">
+        <button id="copyCSS" class="action-btn">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+            <rect x="4" y="4" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M10 4V2.5C10 1.67 9.33 1 8.5 1H2.5C1.67 1 1 1.67 1 2.5V8.5C1 9.33 1.67 10 2.5 10H4" stroke="currentColor" stroke-width="1.5"/>
+          </svg>
+          Copy CSS
+        </button>
+        <button id="findGoogleFont" class="action-btn">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+            <circle cx="6" cy="6" r="4.5" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M9.5 9.5L13 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+          Google Fonts
+        </button>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">
+        All Page Fonts
+        <span id="fontCount" class="badge">0</span>
+      </h2>
+      <div id="allFontsList" class="fonts-list">
+        <p class="empty-state">Enable inspector to scan fonts</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">Font Usage Statistics</h2>
+      <div id="fontStats" class="font-stats">
+        <div class="stat-row">
+          <span class="stat-label">Google Fonts</span>
+          <span id="googleFontsCount" class="stat-value">0</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">System Fonts</span>
+          <span id="systemFontsCount" class="stat-value">0</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">Web Fonts</span>
+          <span id="webFontsCount" class="stat-value">0</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">Total Elements</span>
+          <span id="totalElements" class="stat-value">0</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">Font Comparison</h2>
+      <div id="fontComparison" class="font-comparison">
+        <input id="comparisonInput" type="text" class="comparison-input" placeholder="Type something to compare...">
+        <div id="comparisonList" class="comparison-list"></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">Font Pairing Suggestions</h2>
+      <div id="pairingSuggestions" class="pairing-suggestions">
+        <p class="empty-state">Scan page fonts to get suggestions</p>
+      </div>
+    </section>
+  </div>
+
+  <script src="font-analyzer.js"></script>
+  <script src="font-library.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

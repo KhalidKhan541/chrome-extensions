@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Password Analyzer</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo">
+        <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="#00ff88" stroke-width="2">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          <rect x="9" y="9" width="6" height="5" rx="1"/>
+          <path d="M12 14v2"/>
+        </svg>
+        <h1>Password Analyzer</h1>
+      </div>
+    </header>
+
+    <section class="input-section">
+      <div class="input-wrapper">
+        <input type="password" id="passwordInput" placeholder="Enter a password to analyze..." autocomplete="off" spellcheck="false">
+        <button id="toggleVisibility" class="icon-btn" title="Show/Hide password">
+          <svg class="eye-open" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+            <circle cx="12" cy="12" r="3"/>
+          </svg>
+          <svg class="eye-closed" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" style="display:none">
+            <path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24"/>
+            <line x1="1" y1="1" x2="23" y2="23"/>
+          </svg>
+        </button>
+      </div>
+      <div class="button-row">
+        <button id="analyzeBtn" class="btn primary">Analyze</button>
+        <button id="generateBtn" class="btn secondary">Generate</button>
+        <button id="breachBtn" class="btn warning">Check Breach</button>
+      </div>
+    </section>
+
+    <section class="result-section" id="resultSection" style="display:none">
+      <div class="strength-display">
+        <div class="strength-bar-container">
+          <div class="strength-bar" id="strengthBar"></div>
+        </div>
+        <div class="strength-info">
+          <span class="strength-label" id="strengthLabel">Weak</span>
+          <span class="strength-score" id="strengthScore">0/100</span>
+        </div>
+      </div>
+
+      <div class="score-breakdown">
+        <div class="breakdown-item">
+          <span class="breakdown-label">Length</span>
+          <div class="breakdown-bar-bg"><div class="breakdown-bar" id="lengthBar"></div></div>
+          <span class="breakdown-value" id="lengthValue">0</span>
+        </div>
+        <div class="breakdown-item">
+          <span class="breakdown-label">Char Variety</span>
+          <div class="breakdown-bar-bg"><div class="breakdown-bar" id="charBar"></div></div>
+          <span class="breakdown-value" id="charValue">0</span>
+        </div>
+        <div class="breakdown-item">
+          <span class="breakdown-label">Patterns</span>
+          <div class="breakdown-bar-bg"><div class="breakdown-bar" id="patternBar"></div></div>
+          <span class="breakdown-value" id="patternValue">0</span>
+        </div>
+        <div class="breakdown-item">
+          <span class="breakdown-label">Entropy</span>
+          <div class="breakdown-bar-bg"><div class="breakdown-bar" id="entropyBar"></div></div>
+          <span class="breakdown-value" id="entropyValue">0</span>
+        </div>
+      </div>
+
+      <div class="info-grid">
+        <div class="info-card">
+          <span class="info-label">Crack Time</span>
+          <span class="info-value" id="crackTime">-</span>
+        </div>
+        <div class="info-card">
+          <span class="info-label">Entropy</span>
+          <span class="info-value" id="entropyBits">0 bits</span>
+        </div>
+      </div>
+
+      <div class="suggestions" id="suggestions">
+        <h3>Suggestions</h3>
+        <ul id="suggestionsList"></ul>
+      </div>
+    </section>
+
+    <section class="breach-section" id="breachSection" style="display:none">
+      <h3>Breach Check</h3>
+      <div id="breachResult" class="breach-result"></div>
+    </section>
+
+    <section class="generator-section" id="generatorSection" style="display:none">
+      <h3>Password Generator</h3>
+      <div class="generator-options">
+        <label>Length: <span id="genLengthValue">16</span>
+          <input type="range" id="genLength" min="8" max="64" value="16">
+        </label>
+        <div class="checkbox-row">
+          <label><input type="checkbox" id="genUpper" checked> ABC</label>
+          <label><input type="checkbox" id="genLower" checked> abc</label>
+          <label><input type="checkbox" id="genNumbers" checked> 123</label>
+          <label><input type="checkbox" id="genSymbols" checked> #$&</label>
+        </div>
+        <label><input type="checkbox" id="genPronounceable"> Pronounceable</label>
+        <label><input type="checkbox" id="genPassphrase"> Passphrase</label>
+      </div>
+      <div class="generated-output">
+        <input type="text" id="generatedPassword" readonly>
+        <button id="copyGenerated" class="icon-btn" title="Copy">📋</button>
+        <button id="useGenerated" class="btn small" title="Use this password">Use</button>
+      </div>
+      <button id="regenerateBtn" class="btn secondary full-width">Regenerate</button>
+    </section>
+
+    <section class="tips-section">
+      <h3>Security Tips</h3>
+      <div class="tips-list" id="tipsList">
+        <div class="tip">Use at least 16 characters for important accounts.</div>
+        <div class="tip">Never reuse passwords across different sites.</div>
+        <div class="tip">Enable two-factor authentication wherever possible.</div>
+        <div class="tip">Use a password manager to store unique passwords.</div>
+        <div class="tip">Avoid using personal information in passwords.</div>
+      </div>
+    </section>
+
+    <section class="history-section">
+      <h3>Recent History <button id="clearHistory" class="icon-btn small" title="Clear history">🗑️</button></h3>
+      <div class="history-list" id="historyList">
+        <p class="empty-state">No passwords analyzed yet.</p>
+      </div>
+    </section>
+  </div>
+  <script src="password-analyzer.js"></script>
+  <script src="password-generator.js"></script>
+  <script src="breach-checker.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

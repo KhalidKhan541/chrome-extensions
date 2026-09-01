@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Speed Analyzer</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <div class="logo">
+        <svg class="logo-icon" viewBox="0 0 24 24" width="28" height="28">
+          <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/>
+          <path d="M12 6 L12 12 L16 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="12" cy="12" r="2" fill="currentColor"/>
+        </svg>
+        <h1>Page Speed Analyzer</h1>
+      </div>
+      <button id="analyzeBtn" class="btn-primary">
+        <svg viewBox="0 0 24 24" width="16" height="16">
+          <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" fill="currentColor"/>
+        </svg>
+        Analyze Page
+      </button>
+    </header>
+
+    <div id="loadingState" class="loading hidden">
+      <div class="spinner"></div>
+      <p>Analyzing performance...</p>
+    </div>
+
+    <div id="resultsContainer" class="results hidden">
+      <section class="score-section">
+        <div class="score-gauge">
+          <svg viewBox="0 0 120 120" class="gauge-svg">
+            <circle cx="60" cy="60" r="54" fill="none" stroke="#2d2d2d" stroke-width="8"/>
+            <circle id="gaugeCircle" cx="60" cy="60" r="54" fill="none" stroke="#0cce6b" stroke-width="8"
+              stroke-dasharray="339.292" stroke-dashoffset="339.292" stroke-linecap="round"
+              transform="rotate(-90 60 60)"/>
+          </svg>
+          <div class="score-value">
+            <span id="scoreNumber" class="score-number">0</span>
+            <span class="score-label">Performance Score</span>
+          </div>
+        </div>
+        <div id="scoreRating" class="score-rating">Good</div>
+      </section>
+
+      <section class="metrics-section">
+        <h2 class="section-title">Core Web Vitals</h2>
+        <div class="vitals-grid">
+          <div class="metric-card" id="lcpCard">
+            <div class="metric-icon">
+              <svg viewBox="0 0 24 24" width="20" height="20"><path d="M21 3H3v18h18V3zm-2 16H5V5h14v14z" fill="currentColor"/></svg>
+            </div>
+            <div class="metric-info">
+              <span class="metric-value" id="lcpValue">--</span>
+              <span class="metric-label">LCP</span>
+              <span class="metric-full">Largest Contentful Paint</span>
+            </div>
+            <span class="metric-status" id="lcpStatus"></span>
+          </div>
+          <div class="metric-card" id="inpCard">
+            <div class="metric-icon">
+              <svg viewBox="0 0 24 24" width="20" height="20"><path d="M13 3L4 14h7l-2 7 9-11h-7l2-7z" fill="currentColor"/></svg>
+            </div>
+            <div class="metric-info">
+              <span class="metric-value" id="inpValue">--</span>
+              <span class="metric-label">INP</span>
+              <span class="metric-full">Interaction to Next Paint</span>
+            </div>
+            <span class="metric-status" id="inpStatus"></span>
+          </div>
+          <div class="metric-card" id="clsCard">
+            <div class="metric-icon">
+              <svg viewBox="0 0 24 24" width="20" height="20"><path d="M3 3h8v8H3V3zm0 10h8v8H3v-8zm10-10h8v8h-8V3zm0 10h8v8h-8v-8z" fill="currentColor"/></svg>
+            </div>
+            <div class="metric-info">
+              <span class="metric-value" id="clsValue">--</span>
+              <span class="metric-label">CLS</span>
+              <span class="metric-full">Cumulative Layout Shift</span>
+            </div>
+            <span class="metric-status" id="clsStatus"></span>
+          </div>
+        </div>
+      </section>
+
+      <section class="metrics-section">
+        <h2 class="section-title">Performance Metrics</h2>
+        <div class="metrics-list">
+          <div class="metric-row">
+            <span class="metric-name">FCP (First Contentful Paint)</span>
+            <span class="metric-val" id="fcpValue">--</span>
+          </div>
+          <div class="metric-row">
+            <span class="metric-name">TTI (Time to Interactive)</span>
+            <span class="metric-val" id="ttiValue">--</span>
+          </div>
+          <div class="metric-row">
+            <span class="metric-name">TBT (Total Blocking Time)</span>
+            <span class="metric-val" id="tbtValue">--</span>
+          </div>
+          <div class="metric-row">
+            <span class="metric-name">Page Load Time</span>
+            <span class="metric-val" id="loadTimeValue">--</span>
+          </div>
+          <div class="metric-row">
+            <span class="metric-name">DOM Interactive</span>
+            <span class="metric-val" id="domInteractiveValue">--</span>
+          </div>
+          <div class="metric-row">
+            <span class="metric-name">Transfer Size</span>
+            <span class="metric-val" id="transferSizeValue">--</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="metrics-section">
+        <h2 class="section-title">Resource Breakdown</h2>
+        <div class="resource-chart">
+          <div id="resourceChart" class="chart-bars"></div>
+          <div id="resourceLegend" class="chart-legend"></div>
+        </div>
+      </section>
+
+      <section class="metrics-section">
+        <h2 class="section-title">Recommendations</h2>
+        <div id="recommendationsList" class="recommendations-list"></div>
+      </section>
+
+      <section class="metrics-section">
+        <h2 class="section-title">Analysis History</h2>
+        <div id="historyList" class="history-list"></div>
+        <button id="clearHistoryBtn" class="btn-secondary">Clear History</button>
+      </section>
+
+      <section class="metrics-section">
+        <h2 class="section-title">Compare Mode</h2>
+        <div class="compare-controls">
+          <button id="saveSnapshotBtn" class="btn-secondary">Save Snapshot</button>
+          <button id="compareBtn" class="btn-secondary">Compare with Snapshot</button>
+        </div>
+        <div id="compareResult" class="compare-result hidden"></div>
+      </section>
+    </div>
+
+    <div id="errorState" class="error-state hidden">
+      <svg viewBox="0 0 24 24" width="48" height="48">
+        <circle cx="12" cy="12" r="10" fill="none" stroke="#ff4e42" stroke-width="2"/>
+        <path d="M12 8v4m0 4h.01" stroke="#ff4e42" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+      <p id="errorMessage">Unable to analyze this page.</p>
+    </div>
+  </div>
+
+  <script src="metric-calculator.js"></script>
+  <script src="recommendation-engine.js"></script>
+  <script src="resource-analyzer.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

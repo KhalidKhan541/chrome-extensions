@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tab Groups Manager</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <div class="header-left">
+        <svg class="logo" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+          <path d="M2 17l10 5 10-5"/>
+          <path d="M2 12l10 5 10-5"/>
+        </svg>
+        <h1>Tab Groups Manager</h1>
+      </div>
+      <div class="header-actions">
+        <button id="settingsBtn" class="icon-btn" title="Settings">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <div class="search-bar">
+      <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="11" cy="11" r="8"/>
+        <path d="M21 21l-4.35-4.35"/>
+      </svg>
+      <input type="text" id="searchInput" placeholder="Search tabs..." autocomplete="off">
+    </div>
+
+    <div class="tabs-section">
+      <div class="section-header">
+        <h2>Current Window Tabs</h2>
+        <span id="tabCount" class="badge">0</span>
+      </div>
+      <div id="tabsList" class="tabs-list"></div>
+    </div>
+
+    <div class="actions-section">
+      <h2>Quick Actions</h2>
+      <div class="actions-grid">
+        <button id="createGroupBtn" class="action-btn primary">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 5v14M5 12h14"/>
+          </svg>
+          Create Group
+        </button>
+        <button id="ungroupAllBtn" class="action-btn secondary">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/>
+          </svg>
+          Ungroup All
+        </button>
+        <button id="collapseAllBtn" class="action-btn secondary">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4 14h16M4 10h16"/>
+          </svg>
+          Collapse All
+        </button>
+        <button id="expandAllBtn" class="action-btn secondary">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4 4h16M4 12h16M4 20h16"/>
+          </svg>
+          Expand All
+        </button>
+      </div>
+    </div>
+
+    <div class="auto-group-section">
+      <h2>Auto-Group</h2>
+      <div class="auto-group-options">
+        <button id="groupByDomainBtn" class="auto-btn" title="Group tabs by domain">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+          </svg>
+          By Domain
+        </button>
+        <button id="groupByKeywordsBtn" class="auto-btn" title="Group tabs by keywords in title/URL">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4 7V4h16v3M9 20h6M12 4v16"/>
+          </svg>
+          By Keywords
+        </button>
+        <button id="groupByTimeBtn" class="auto-btn" title="Group tabs by time opened">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M12 6v6l4 2"/>
+          </svg>
+          By Time
+        </button>
+        <button id="groupByProjectBtn" class="auto-btn" title="Group by project">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
+          </svg>
+          By Project
+        </button>
+      </div>
+    </div>
+
+    <div class="color-section">
+      <h2>Group Colors</h2>
+      <div class="color-palette">
+        <button class="color-btn" data-color="blue" style="--btn-color: #4285f4"></button>
+        <button class="color-btn" data-color="red" style="--btn-color: #ea4335"></button>
+        <button class="color-btn" data-color="yellow" style="--btn-color: #fbbc04"></button>
+        <button class="color-btn" data-color="green" style="--btn-color: #34a853"></button>
+        <button class="color-btn" data-color="pink" style="--btn-color: #ff6d9f"></button>
+        <button class="color-btn" data-color="purple" style="--btn-color: #a142f4"></button>
+        <button class="color-btn" data-color="cyan" style="--btn-color: #24c1e0"></button>
+        <button class="color-btn" data-color="orange" style="--btn-color: #fa7b17"></button>
+        <button class="color-btn" data-color="grey" style="--btn-color: #9aa0a6"></button>
+      </div>
+    </div>
+
+    <div class="presets-section">
+      <h2>Presets</h2>
+      <div class="presets-list" id="presetsList"></div>
+      <div class="preset-actions">
+        <button id="savePresetBtn" class="action-btn secondary small">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/>
+            <polyline points="17 21 17 13 7 13 7 21"/>
+            <polyline points="7 3 7 8 15 8"/>
+          </svg>
+          Save Preset
+        </button>
+        <button id="loadPresetBtn" class="action-btn secondary small">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="7 10 12 15 17 10"/>
+            <line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
+          Load Preset
+        </button>
+      </div>
+    </div>
+
+    <div class="groups-section">
+      <h2>Active Groups</h2>
+      <div id="groupsList" class="groups-list"></div>
+    </div>
+  </div>
+
+  <div id="createGroupModal" class="modal hidden">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Create New Group</h3>
+        <button id="closeModalBtn" class="close-btn">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="groupNameInput">Group Name</label>
+          <input type="text" id="groupNameInput" placeholder="Enter group name...">
+        </div>
+        <div class="form-group">
+          <label>Select Tabs</label>
+          <div id="modalTabsList" class="modal-tabs-list"></div>
+        </div>
+        <div class="form-group">
+          <label>Group Color</label>
+          <div class="color-palette modal-colors">
+            <button class="color-btn modal-color-btn" data-color="blue" style="--btn-color: #4285f4"></button>
+            <button class="color-btn modal-color-btn" data-color="red" style="--btn-color: #ea4335"></button>
+            <button class="color-btn modal-color-btn" data-color="yellow" style="--btn-color: #fbbc04"></button>
+            <button class="color-btn modal-color-btn" data-color="green" style="--btn-color: #34a853"></button>
+            <button class="color-btn modal-color-btn" data-color="pink" style="--btn-color: #ff6d9f"></button>
+            <button class="color-btn modal-color-btn" data-color="purple" style="--btn-color: #a142f4"></button>
+            <button class="color-btn modal-color-btn" data-color="cyan" style="--btn-color: #24c1e0"></button>
+            <button class="color-btn modal-color-btn" data-color="orange" style="--btn-color: #fa7b17"></button>
+            <button class="color-btn modal-color-btn" data-color="grey" style="--btn-color: #9aa0a6"></button>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="cancelGroupBtn" class="action-btn secondary">Cancel</button>
+        <button id="confirmGroupBtn" class="action-btn primary">Create Group</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="savePresetModal" class="modal hidden">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Save Preset</h3>
+        <button id="closePresetModalBtn" class="close-btn">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="presetNameInput">Preset Name</label>
+          <input type="text" id="presetNameInput" placeholder="Enter preset name...">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="cancelPresetBtn" class="action-btn secondary">Cancel</button>
+        <button id="confirmPresetBtn" class="action-btn primary">Save Preset</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast hidden"></div>
+
+  <script src="group-manager.js"></script>
+  <script src="auto-grouper.js"></script>
+  <script src="group-presets.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

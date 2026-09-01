@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Markdown Editor</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="app" id="app">
+    <header class="toolbar">
+      <div class="toolbar-left">
+        <button class="tool-btn" data-action="bold" title="Bold (Ctrl+B)"><strong>B</strong></button>
+        <button class="tool-btn" data-action="italic" title="Italic (Ctrl+I)"><em>I</em></button>
+        <button class="tool-btn" data-action="heading" title="Heading">H</button>
+        <button class="tool-btn" data-action="link" title="Link (Ctrl+K)">🔗</button>
+        <button class="tool-btn" data-action="image" title="Image">🖼</button>
+        <button class="tool-btn" data-action="code" title="Code">{ }</button>
+        <button class="tool-btn" data-action="list" title="List">☰</button>
+        <button class="tool-btn" data-action="quote" title="Quote">❝</button>
+      </div>
+      <div class="toolbar-right">
+        <select id="themeSelector" class="theme-select">
+          <option value="dark">Dark</option>
+          <option value="light">Light</option>
+          <option value="solarized">Solarized</option>
+        </select>
+        <button class="tool-btn" id="fullscreenBtn" title="Fullscreen">⛶</button>
+      </div>
+    </header>
+
+    <div class="editor-container">
+      <div class="editor-panel">
+        <div class="line-numbers" id="lineNumbers"></div>
+        <textarea id="editor" class="editor" placeholder="Start writing markdown..." spellcheck="false"></textarea>
+      </div>
+      <div class="divider"></div>
+      <div class="preview-panel">
+        <div id="preview" class="preview"></div>
+      </div>
+    </div>
+
+    <footer class="status-bar">
+      <div class="status-left">
+        <span id="wordCount">0 words</span>
+        <span class="separator">·</span>
+        <span id="charCount">0 chars</span>
+        <span class="separator">·</span>
+        <span id="lineCount">0 lines</span>
+        <span class="separator">·</span>
+        <span id="autoSaveStatus">Auto-save: ON</span>
+      </div>
+      <div class="status-right">
+        <div class="doc-manager">
+          <select id="docSelector" class="doc-select">
+            <option value="">-- Select Document --</option>
+          </select>
+          <button id="saveDocBtn" class="action-btn" title="Save">💾</button>
+          <button id="loadDocBtn" class="action-btn" title="Load">📂</button>
+          <button id="deleteDocBtn" class="action-btn" title="Delete">🗑</button>
+          <button id="newDocBtn" class="action-btn" title="New Document">➕</button>
+        </div>
+        <div class="export-group">
+          <button id="exportMd" class="action-btn export-btn" title="Export Markdown">.md</button>
+          <button id="exportHtml" class="action-btn export-btn" title="Export HTML">.html</button>
+          <button id="exportPdf" class="action-btn export-btn" title="Export PDF">PDF</button>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <div class="save-dialog" id="saveDialog" style="display:none;">
+    <div class="save-dialog-content">
+      <h3>Save Document</h3>
+      <input type="text" id="docNameInput" placeholder="Document name..." class="doc-input">
+      <div class="dialog-buttons">
+        <button id="saveDialogConfirm" class="action-btn">Save</button>
+        <button id="saveDialogCancel" class="action-btn">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="markdown-parser.js"></script>
+  <script src="syntax-highlighter.js"></script>
+  <script src="export-manager.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

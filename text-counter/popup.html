@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Text Counter</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <div class="logo">
+        <svg class="icon" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+          <rect x="16" y="16" width="96" height="96" rx="16" fill="#6366f1"/>
+          <text x="64" y="78" text-anchor="middle" font-size="48" font-weight="bold" fill="white" font-family="Arial">T</text>
+        </svg>
+        <h1>Text Counter</h1>
+      </div>
+      <div class="header-actions">
+        <button id="exportBtn" class="btn btn-secondary" title="Export Statistics">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="7 10 12 15 17 10"/>
+            <line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
+        </button>
+        <button id="copyTextBtn" class="btn btn-secondary" title="Copy Text">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+          </svg>
+        </button>
+        <button id="clearBtn" class="btn btn-secondary" title="Clear Text">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="3 6 5 6 21 6"/>
+            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="main">
+      <div class="input-section">
+        <textarea id="textInput" placeholder="Type or paste your text here..." spellcheck="false"></textarea>
+      </div>
+
+      <div class="stats-section">
+        <div class="stats-grid">
+          <div class="stat-card primary">
+            <div class="stat-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                <polyline points="14 2 14 8 20 8"/>
+                <line x1="16" y1="13" x2="8" y2="13"/>
+                <line x1="16" y1="17" x2="8" y2="17"/>
+              </svg>
+            </div>
+            <div class="stat-content">
+              <span class="stat-value" id="charCount">0</span>
+              <span class="stat-label">Characters</span>
+              <span class="stat-sub" id="charNoSpaces">0 without spaces</span>
+            </div>
+          </div>
+
+          <div class="stat-card primary">
+            <div class="stat-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 7V4h16v3"/>
+                <path d="M9 20h6"/>
+                <path d="M12 4v16"/>
+              </svg>
+            </div>
+            <div class="stat-content">
+              <span class="stat-value" id="wordCount">0</span>
+              <span class="stat-label">Words</span>
+              <span class="stat-sub" id="avgWordLength">0 avg length</span>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                <circle cx="12" cy="12" r="3"/>
+              </svg>
+            </div>
+            <div class="stat-content">
+              <span class="stat-value" id="sentenceCount">0</span>
+              <span class="stat-label">Sentences</span>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="17" y1="10" x2="3" y2="10"/>
+                <line x1="21" y1="6" x2="3" y2="6"/>
+                <line x1="21" y1="14" x2="3" y2="14"/>
+                <line x1="17" y1="18" x2="3" y2="18"/>
+              </svg>
+            </div>
+            <div class="stat-content">
+              <span class="stat-value" id="paragraphCount">0</span>
+              <span class="stat-label">Paragraphs</span>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="21" y1="10" x2="7" y2="10"/>
+                <line x1="21" y1="6" x2="3" y2="6"/>
+                <line x1="21" y1="14" x2="3" y2="14"/>
+                <line x1="21" y1="18" x2="7" y2="18"/>
+              </svg>
+            </div>
+            <div class="stat-content">
+              <span class="stat-value" id="lineCount">0</span>
+              <span class="stat-label">Lines</span>
+            </div>
+          </div>
+
+          <div class="stat-card accent">
+            <div class="stat-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/>
+                <polyline points="12 6 12 12 16 14"/>
+              </svg>
+            </div>
+            <div class="stat-content">
+              <span class="stat-value" id="readingTime">0m</span>
+              <span class="stat-label">Reading Time</span>
+            </div>
+          </div>
+
+          <div class="stat-card accent">
+            <div class="stat-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+                <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                <line x1="12" y1="19" x2="12" y2="23"/>
+                <line x1="8" y1="23" x2="16" y2="23"/>
+              </svg>
+            </div>
+            <div class="stat-content">
+              <span class="stat-value" id="speakingTime">0m</span>
+              <span class="stat-label">Speaking Time</span>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                <polyline points="14 2 14 8 20 8"/>
+              </svg>
+            </div>
+            <div class="stat-content">
+              <span class="stat-value" id="pageCount">0</span>
+              <span class="stat-label">Pages</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="detail-stats">
+          <div class="detail-row">
+            <span class="detail-label">Letters:</span>
+            <span class="detail-value" id="letterCount">0</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Digits:</span>
+            <span class="detail-value" id="digitCount">0</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Special Chars:</span>
+            <span class="detail-value" id="specialCount">0</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="reading-level-section">
+        <h3>Reading Level</h3>
+        <div class="reading-level-bar">
+          <div class="level-indicator" id="readingLevelIndicator" style="left: 0%">
+            <div class="level-tooltip" id="readingLevelText">Elementary</div>
+          </div>
+          <div class="level-labels">
+            <span>Elementary</span>
+            <span>Easy</span>
+            <span>Standard</span>
+            <span>Difficult</span>
+          </div>
+        </div>
+        <div class="fk-score">
+          <span>Flesch-Kincaid Grade: </span>
+          <span id="fkGrade">0</span>
+        </div>
+      </div>
+
+      <div class="charts-section">
+        <div class="chart-tabs">
+          <button class="chart-tab active" data-chart="charFreq">Characters</button>
+          <button class="chart-tab" data-chart="wordFreq">Words</button>
+        </div>
+        
+        <div class="chart-container">
+          <div id="charFreqChart" class="chart active">
+            <canvas id="charFreqCanvas"></canvas>
+          </div>
+          <div id="wordFreqChart" class="chart">
+            <canvas id="wordFreqCanvas"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <div class="word-freq-section" id="wordFreqSection">
+        <h3>Word Frequency</h3>
+        <div class="word-freq-list" id="wordFreqList">
+          <p class="empty-state">Start typing to see word frequency analysis</p>
+        </div>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <p>Text Counter Extension v1.0</p>
+    </footer>
+  </div>
+
+  <script src="text-analyzer.js"></script>
+  <script src="frequency-analyzer.js"></script>
+  <script src="charts.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

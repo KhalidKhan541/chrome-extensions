@@ -1,0 +1,31 @@
+{
+  "manifest_version": 3,
+  "name": "Tab Groups Manager",
+  "version": "1.0.0",
+  "description": "Advanced tab grouping and organization tool with auto-grouping, presets, and color coding.",
+  "permissions": [
+    "tabs",
+    "tabGroups",
+    "storage",
+    "bookmarks",
+    "activeTab"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.svg",
+      "32": "icons/icon32.svg",
+      "48": "icons/icon48.svg",
+      "128": "icons/icon128.svg"
+    }
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "icons": {
+    "16": "icons/icon16.svg",
+    "32": "icons/icon32.svg",
+    "48": "icons/icon48.svg",
+    "128": "icons/icon128.svg"
+  }
+}
