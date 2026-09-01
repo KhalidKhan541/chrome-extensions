@@ -1,0 +1,13 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../../dist/extensions/my-extension",
+    "rootDir": "./src",
+    "composite": true,
+    "tsBuildInfoFile": "../../dist/extensions/my-extension/.tsbuildinfo",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "types": ["chrome", "jest", "@testing-library/jest-dom"]
+  },
+  "include": ["src/**/*", "tests/**/*", "e2e/**/*"],
+  "exclude": ["node_modules", "dist", "playwright-report", "test-results"]
+}

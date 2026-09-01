@@ -1,71 +1,67 @@
-# JSON Lens
+﻿# json-lens
 
-Advanced JSON formatter, viewer, editor, and analyzer for Chrome.
+JSON formatter and viewer Chrome extension
 
 ## Features
 
-- **Format & Minify** - Pretty print or compress JSON with configurable indentation
-- **Validate** - Check JSON syntax with detailed error messages
-- **Tree View** - Hierarchical tree with expand/collapse, virtual scrolling for large JSONs
-- **Search** - Find values and keys with match highlighting
-- **Statistics** - Key count, depth, size, and type breakdown
-- **Convert** - Export to CSV or YAML format
-- **JSONPath** - Query JSON with JSONPath expressions
-- **Dark/Light Theme** - Toggle between themes
-- **History** - Recent formatted JSONs (last 10)
-- **Context Menu** - Format JSON selection from any page
-- **Auto-Detect** - Automatically detects JSON on web pages
-- **Click-to-Copy** - Click any value to copy it
-- **Collapsible Nodes** - Collapse/expand objects and arrays
-- **JSON Path Breadcrumbs** - See the path to any value
+- Feature 1
+- Feature 2
+- Feature 3
 
 ## Installation
 
-1. Open Chrome and navigate to `chrome://extensions/`
-2. Enable "Developer mode" in the top right
-3. Click "Load unpacked" and select the `json-lens` directory
-4. The extension icon will appear in your toolbar
+### Developer Mode
+1. Clone this repository
+2. Open Chrome and navigate to `chrome://extensions/`
+3. Enable "Developer mode"
+4. Click "Load unpacked"
+5. Select the extension directory
 
 ## Usage
 
-### Popup
-Click the extension icon to open the JSON formatter popup. Paste JSON, click Format, and use the various tools.
+See [documentation](docs/) for detailed usage.
 
-### On Pages
-The extension automatically detects JSON on web pages and provides:
-- A floating toolbar with Format, Copy, Download, and Tree View options
-- Syntax highlighting with colored values
-- Click-to-copy individual values
-- Collapsible object/array nodes
+## Development
 
-### Context Menu
-Select JSON text on any page, right-click, and choose:
-- "Format JSON with JSON Lens" - Format and copy
-- "View as JSON Tree" - Open in tree viewer
+### Prerequisites
+- Node.js 18+
+- npm 9+
 
-### Keyboard Shortcuts
-- `Tab` - Insert indent in editor
-- `Ctrl+C` / `Cmd+C` - Copy formatted JSON
-
-## JSONPath Examples
-
-```
-$              - Root object
-$.store.book    - All books in store
-$.store.book[*] - All book items
-$..author       - All author values
-$.store.book[0].title - First book title
+### Setup
+```bash
+npm install
 ```
 
-## JSON Patch Operations
-
-```json
-[
-  { "op": "add", "path": "/a/b/c", "value": "hello" },
-  { "op": "remove", "path": "/a/b" },
-  { "op": "replace", "path": "/a/b/c", "value": "world" },
-  { "op": "move", "from": "/a/b/c", "path": "/a/b/d" },
-  { "op": "copy", "from": "/a/b/c", "path": "/a/b/e" },
-  { "op": "test", "path": "/a/b/c", "value": "hello" }
-]
+### Available Scripts
+```bash
+npm test              # Run tests with coverage
+npm run test:watch    # Watch mode
+npm run lint          # Run ESLint
+npm run format        # Format with Prettier
+npm run build         # Build for production
 ```
+
+## CI/CD Pipeline
+
+GitHub Actions for continuous integration:
+1. Lint & Test (Node 18 & 20)
+2. Build
+3. Security Audit
+4. Manifest Validation
+5. Release on tag push
+
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md)
+
+## Security
+
+See [SECURITY.md](SECURITY.md)
+
+## License
+
+MIT License - see [LICENSE](LICENSE)
+
+## Changelog
+
+See [CHANGELOG.md](CHANGELOG.md)

@@ -1,0 +1,44 @@
+name: "CodeQL Config"
+
+queries:
+  - uses: security-extended
+  - uses: security-and-quality
+
+paths:
+  - "extensions"
+  - "packages"
+  - "*.js"
+  - "*.ts"
+
+paths-ignore:
+  - "node_modules"
+  - "dist"
+  - "build"
+  - "coverage"
+  - "**/*.test.js"
+  - "**/*.test.ts"
+  - "**/*.spec.js"
+  - "**/*.spec.ts"
+  - "**/tests/**"
+  - "*.config.js"
+  - "*.config.ts"
+  - "jest.config.js"
+  - "jest.config.ts"
+  - "playwright.config.ts"
+  - ".eslintrc*"
+  - ".prettierrc*"
+  - "scripts/"
+  - ".github/"
+
+exclude-paths:
+  - "node_modules"
+  - "dist"
+  - "build"
+  - "coverage"
+
+compilation:
+  mode: none
+
+threshold:
+  severity: warning
+  precision: high

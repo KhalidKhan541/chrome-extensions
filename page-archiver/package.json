@@ -1,68 +1,17 @@
-{
-  "name": "page-archiver",
-  "version": "1.0.0",
-  "description": "Save pages for offline reading. Archive, read, and manage saved web content.",
-  "main": "background.js",
-  "scripts": {
-    "test": "jest --coverage",
-    "test:watch": "jest --watch",
-    "lint": "eslint . --ext .js",
-    "format": "prettier --write \"**/*.{js,html,css,json,md}\"",
-    "build": "node scripts/build.js",
-    "prepare": "husky install"
-  },
-  "keywords": [
-    "chrome-extension",
-    "page-archiver",
-    "offline-reading",
-    "mhtml",
-    "web-archive"
-  ],
-  "author": "KhalidKhan541",
-  "license": "MIT",
-  "devDependencies": {
-    "@babel/core": "^7.23.0",
-    "@babel/preset-env": "^7.23.0",
-    "@types/chrome": "^0.0.250",
-    "@types/jest": "^29.5.0",
-    "babel-jest": "^29.7.0",
-    "eslint": "^8.54.0",
-    "eslint-config-prettier": "^9.0.0",
-    "husky": "^8.0.3",
-    "jest": "^29.7.0",
-    "jest-environment-jsdom": "^29.7.0",
-    "lint-staged": "^15.0.0",
-    "prettier": "^3.1.0"
-  },
-  "engines": {
-    "node": ">=18.0.0"
-  },
-  "jest": {
-    "testEnvironment": "jsdom",
-    "roots": [
-      "<rootDir>/tests"
-    ],
-    "testMatch": [
-      "**/*.test.js"
-    ],
-    "collectCoverageFrom": [
-      "*.js",
-      "!manifest.json",
-      "!jest.config.js"
-    ],
-    "coverageThreshold": {
-      "global": {
-        "branches": 50,
-        "functions": 50,
-        "lines": 50,
-        "statements": 50
-      }
-    }
-  },
-  "lint-staged": {
-    "*.{js,json,md}": [
-      "prettier --write",
-      "eslint --fix"
-    ]
-  }
+﻿{
+    "version":  "1.0.0",
+    "name":  "@khalidkhan541/page-archiver",
+    "description":  "Archive web pages for offline viewing",
+    "scripts":  {
+                    "test:watch":  "jest --watch --config ../../jest.config.js --rootDir .",
+                    "typecheck":  "tsc --noEmit --project ../../tsconfig.json",
+                    "lint":  "eslint --config ../../eslint.config.js .",
+                    "lint:fix":  "eslint --config ../../eslint.config.js . --fix",
+                    "test":  "jest --config ../../jest.config.js --rootDir .",
+                    "build":  "node ../../scripts/build-extension.js page-archiver"
+                },
+    "type":  "module",
+    "devDependencies":  {
+
+                        }
 }

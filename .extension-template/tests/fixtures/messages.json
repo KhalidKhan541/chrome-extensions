@@ -1,0 +1,45 @@
+{
+  "getConfig": {
+    "type": "GET_CONFIG"
+  },
+  "configChanged": {
+    "type": "CONFIG_CHANGED",
+    "payload": {
+      "apiKey": "new-key",
+      "options": {
+        "theme": "light",
+        "notifications": false,
+        "autoUpdate": true
+      }
+    }
+  },
+  "executeAction": {
+    "type": "EXECUTE_ACTION",
+    "payload": {
+      "action": "process-page",
+      "options": { "selector": ".content" }
+    }
+  },
+  "actionResult": {
+    "type": "ACTION_RESULT",
+    "payload": {
+      "action": "process-page",
+      "success": true,
+      "result": { "processed": 5 },
+      "timestamp": 1735603200000,
+      "url": "https://example.com"
+    }
+  },
+  "contentReady": {
+    "type": "CONTENT_READY",
+    "payload": {
+      "url": "https://example.com/page"
+    }
+  },
+  "togglePopup": {
+    "type": "TOGGLE_POPUP"
+  },
+  "openPopup": {
+    "type": "OPEN_POPUP"
+  }
+}

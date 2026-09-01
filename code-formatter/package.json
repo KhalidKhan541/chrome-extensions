@@ -1,0 +1,17 @@
+﻿{
+    "version":  "1.0.0",
+    "name":  "@khalidkhan541/code-formatter",
+    "description":  "Format and beautify code snippets in multiple languages",
+    "scripts":  {
+                    "test:watch":  "jest --watch --config ../../jest.config.js --rootDir .",
+                    "typecheck":  "tsc --noEmit --project ../../tsconfig.json",
+                    "lint":  "eslint --config ../../eslint.config.js .",
+                    "lint:fix":  "eslint --config ../../eslint.config.js . --fix",
+                    "test":  "jest --config ../../jest.config.js --rootDir .",
+                    "build":  "node ../../scripts/build-extension.js code-formatter"
+                },
+    "type":  "module",
+    "devDependencies":  {
+
+                        }
+}

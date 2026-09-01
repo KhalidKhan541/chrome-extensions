@@ -1,0 +1,87 @@
+# Dependabot Configuration
+# https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
+
+version: 2
+updates:
+  # npm dependencies
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "UTC"
+    open-pull-requests-limit: 10
+    labels:
+      - "dependencies"
+      - "npm"
+    commit-message:
+      prefix: "chore(deps)"
+      prefix-development: "chore(deps-dev)"
+      include: "scope"
+    groups:
+      development-dependencies:
+        patterns:
+          - "*"
+          - "@types/*"
+          - "eslint*"
+          - "prettier*"
+          - "typescript*"
+          - "vitest*"
+          - "@vitest/*"
+        update-types:
+          - "minor"
+          - "patch"
+      production-dependencies:
+        patterns:
+          - "webextension-polyfill"
+          - "chrome-types"
+        update-types:
+          - "minor"
+          - "patch"
+    ignore:
+      # Ignore major updates for stability
+      - dependency-type: "all"
+        update-type: "version-update:semver-major"
+    allow:
+      - dependency-type: "direct"
+      - dependency-type: "indirect"
+
+  # GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "UTC"
+    open-pull-requests-limit: 5
+    labels:
+      - "dependencies"
+      - "github-actions"
+    commit-message:
+      prefix: "ci(deps)"
+      include: "scope"
+    groups:
+      github-actions:
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"
+
+  # Docker (if applicable)
+  - package-ecosystem: "docker"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+      day: 1
+      time: "09:00"
+      timezone: "UTC"
+    open-pull-requests-limit: 3
+    labels:
+      - "dependencies"
+      - "docker"
+    commit-message:
+      prefix: "chore(deps)"
+      include: "scope"

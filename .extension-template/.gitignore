@@ -1,0 +1,39 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+.output/
+*.zip
+
+# Coverage
+coverage/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Test
+playwright-report/
+test-results/
+
+# TypeScript
+*.tsbuildinfo
+
+# WXT
+.wxt/

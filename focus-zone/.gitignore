@@ -7,3 +7,6 @@ Thumbs.db
 *.pem
 dist/
 build/
+coverage/
+*.zip
+*.tsbuildinfo

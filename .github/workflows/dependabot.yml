@@ -1,0 +1,86 @@
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "UTC"
+    open-pull-requests-limit: 10
+    reviewers:
+      - "KhalidKhan541"
+    assignees:
+      - "KhalidKhan541"
+    labels:
+      - "dependencies"
+      - "automerge"
+    allow:
+      - dependency-type: "direct"
+      - dependency-type: "indirect"
+    ignore:
+      - dependency-name: "*"
+        update-type: "version-update:semver-major"
+    commit-message:
+      prefix: "chore(deps)"
+      prefix-development: "chore(deps-dev)"
+      include: "scope"
+    automerged-updates:
+      - match:
+          update-type: "version-update:semver-patch"
+      - match:
+          update-type: "version-update:semver-minor"
+    groups:
+      dev-dependencies:
+        patterns:
+          - "@types/*"
+          - "eslint*"
+          - "prettier*"
+          - "jest*"
+          - "babel*"
+          - "typescript*"
+          - "husky*"
+          - "lint-staged*"
+        update-types:
+          - "version-update:semver-patch"
+          - "version-update:semver-minor"
+      babel:
+        patterns:
+          - "@babel/*"
+        update-types:
+          - "version-update:semver-patch"
+          - "version-update:semver-minor"
+      playwright:
+        patterns:
+          - "playwright*"
+          - "@playwright/*"
+        update-types:
+          - "version-update:semver-patch"
+          - "version-update:semver-minor"
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "UTC"
+    open-pull-requests-limit: 5
+    reviewers:
+      - "KhalidKhan541"
+    assignees:
+      - "KhalidKhan541"
+    labels:
+      - "github-actions"
+      - "automerge"
+    allow:
+      - dependency-type: "direct"
+      - dependency-type: "indirect"
+    commit-message:
+      prefix: "chore(ci)"
+      include: "scope"
+    automerged-updates:
+      - match:
+          update-type: "version-update:semver-patch"
+      - match:
+          update-type: "version-update:semver-minor"

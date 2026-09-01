@@ -1,0 +1,82 @@
+﻿name: CI/CD
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "npm"
+      - run: npm ci
+      - run: npm run lint
+      - run: npm test
+      - uses: codecov/codecov-action@v3
+        with:
+          files: ./coverage/lcov.info
+          fail_ci_if_error: false
+  build:
+    needs: lint-and-test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+      - run: npm ci
+      - run: npm run build
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ github.repository }}-${{ github.sha }}
+          path: dist/
+          retention-days: 7
+  security-audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - run: npm audit --audit-level=moderate
+      - run: npx audit-ci --config audit-ci.json || true
+  validate-manifest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          node -e "
+            const manifest = require('./manifest.json');
+            const required = ['manifest_version', 'name', 'version', 'description', 'permissions'];
+            required.forEach(field => { if (!manifest[field]) { console.error('Missing:', field); process.exit(1); } });
+            if (manifest.manifest_version !== 3) { console.error('Must use Manifest V3'); process.exit(1); }
+            console.log('Manifest OK');
+          "
+  release:
+    needs: [lint-and-test, build, security-audit, validate-manifest]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - run: npm ci
+      - run: npm run build
+      - uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, "refs/tags/")
+        with:
+          files: dist/*
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

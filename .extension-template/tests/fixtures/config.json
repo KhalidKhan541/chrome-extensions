@@ -1,0 +1,8 @@
+{
+  "apiKey": "test-api-key-12345",
+  "options": {
+    "theme": "dark",
+    "notifications": true,
+    "autoUpdate": false
+  }
+}

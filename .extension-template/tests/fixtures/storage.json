@@ -1,0 +1,36 @@
+{
+  "config": {
+    "apiKey": "test-api-key-12345",
+    "options": {
+      "theme": "dark",
+      "notifications": true,
+      "autoUpdate": false
+    }
+  },
+  "userPreferences": {
+    "language": "en",
+    "timezone": "UTC",
+    "dateFormat": "YYYY-MM-DD"
+  },
+  "cache": {
+    "api-data": {
+      "key": "api-data",
+      "value": { "items": [1, 2, 3] },
+      "expiresAt": 1735689600000,
+      "createdAt": 1735603200000
+    }
+  },
+  "history": [
+    {
+      "id": "hist-1",
+      "action": "run-action",
+      "timestamp": 1735603200000,
+      "metadata": { "duration": 150 }
+    },
+    {
+      "id": "hist-2",
+      "action": "toggle-popup",
+      "timestamp": 1735603300000
+    }
+  ]
+}

@@ -1,0 +1,97 @@
+{
+  "$schema": "https://json.schemastore.org/webextension.json",
+  "name": "{{EXTENSION_NAME}}",
+  "version": "0.0.0",
+  "manifest_version": 3,
+  "description": "{{EXTENSION_DESCRIPTION}}",
+  "default_locale": "en",
+  "icons": {
+    "16": "icons/icon-16.png",
+    "32": "icons/icon-32.png",
+    "48": "icons/icon-48.png",
+    "128": "icons/icon-128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon-16.png",
+      "32": "icons/icon-32.png",
+      "48": "icons/icon-48.png",
+      "128": "icons/icon-128.png"
+    },
+    "default_title": "{{EXTENSION_NAME}}"
+  },
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "css": ["content.css"],
+      "run_at": "document_idle",
+      "all_frames": false
+    }
+  ],
+  "permissions": [
+    "storage",
+    "activeTab",
+    "scripting",
+    "tabs"
+  ],
+  "host_permissions": [
+    "https://api.example.com/*"
+  ],
+  "optional_permissions": [
+    "contextMenus",
+    "notifications",
+    "alarms"
+  ],
+  "options_page": "options.html",
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["icons/*", "styles/*"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'",
+    "sandbox": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'"
+  },
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ruleset_1",
+        "enabled": true,
+        "path": "rules/rules.json"
+      }
+    ]
+  },
+  "commands": {
+    "open-popup": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+X",
+        "mac": "Command+Shift+X"
+      },
+      "description": "Open extension popup"
+    },
+    "toggle-feature": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+Y",
+        "mac": "Command+Shift+Y"
+      },
+      "description": "Toggle main feature"
+    }
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "{{EXTENSION_ID}}@{{ORG}}.com",
+      "strict_min_version": "109.0"
+    }
+  }
+}

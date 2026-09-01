@@ -1,0 +1,17 @@
+﻿{
+    "version":  "1.0.0",
+    "name":  "@khalidkhan541/focus-zone",
+    "description":  "Distraction-free focus mode with site blocking",
+    "scripts":  {
+                    "test:watch":  "jest --watch --config ../../jest.config.js --rootDir .",
+                    "typecheck":  "tsc --noEmit --project ../../tsconfig.json",
+                    "lint":  "eslint --config ../../eslint.config.js .",
+                    "lint:fix":  "eslint --config ../../eslint.config.js . --fix",
+                    "test":  "jest --config ../../jest.config.js --rootDir .",
+                    "build":  "node ../../scripts/build-extension.js focus-zone"
+                },
+    "type":  "module",
+    "devDependencies":  {
+
+                        }
+}
