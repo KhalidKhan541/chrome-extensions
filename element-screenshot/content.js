@@ -1,0 +1,1 @@
+// element-screenshot content script

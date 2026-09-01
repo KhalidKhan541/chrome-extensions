@@ -1,0 +1,1 @@
+// viewport-resizer content script

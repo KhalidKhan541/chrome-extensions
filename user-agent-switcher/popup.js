@@ -1,0 +1,1 @@
+// user-agent-switcher popup script
